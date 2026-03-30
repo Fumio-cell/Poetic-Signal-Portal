@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poetic Signal — Sound. Image. Language.</title>
+  <meta name="description" content="Poetic Signal is an abstract poetic form in which sound, image, and language operate as equal signals within a unified perceptual field. Explore the 7-app creative toolkit." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
+</head>
+<body>
+  <!-- ═══════════════════════════════════════ -->
+  <!-- GRAIN OVERLAY -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- NAVIGATION -->
+  <!-- ═══════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav__logo">POETIC SIGNAL</a>
+    <div class="nav__links">
+      <a href="#manifesto">Manifesto</a>
+      <a href="#process">Process</a>
+      <a href="#toolkit">Toolkit</a>
+      <a href="#pricing" class="nav__cta">Get Toolkit</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 1: HERO -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <canvas id="hero-canvas"></canvas>
+    </div>
+    <div class="hero__content">
+      <div class="hero__logo-wrapper" data-animate="fade-up">
+        <img src="icons/logo-glow.png.png" alt="Poetic Signal Symbol" class="hero__symbol" />
+      </div>
+      <h1 class="hero__title" data-animate="fade-up" data-delay="100">
+        <span class="hero__title-main">Poetic Signal</span>
+      </h1>
+      <p class="hero__subtitle" data-animate="fade-up" data-delay="200">
+        Sound. Image. Language.<br />
+        A unified perceptual field.
+      </p>
+      <p class="hero__subtitle-jp" data-animate="fade-up" data-delay="400">
+        音、映像、言語 —— ひとつの知覚の場として。
+      </p>
+    </div>
+    <div class="hero__scroll-indicator" data-animate="fade-up" data-delay="800">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 2: MANIFESTO -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="manifesto" id="manifesto">
+    <div class="container">
+      <div class="manifesto__label" data-animate="fade-up">What is Poetic Signal?</div>
+      <div class="manifesto__body">
+        <p class="manifesto__text" data-animate="fade-up">
+          Poetic Signal is an abstract poetic form<br />
+          in which sound, image, and language<br />
+          operate as equal signals<br />
+          within a unified perceptual field.
+        </p>
+        <p class="manifesto__text manifesto__text--emphasis" data-animate="fade-up">
+          It is not music. It is not video. It is not text.
+        </p>
+        <p class="manifesto__text" data-animate="fade-up">
+          It is a poetic media form<br />
+          composed of interacting perceptual signals.
+        </p>
+      </div>
+      <div class="manifesto__divider" data-animate="fade-up"></div>
+      <div class="manifesto__body manifesto__body--jp">
+        <p class="manifesto__text-jp" data-animate="fade-up">
+          Poetic Signalは、音・映像・言語が<br />
+          等価のシグナルとして共存する<br />
+          抽象的な詩的形式です。
+        </p>
+        <p class="manifesto__text-jp" data-animate="fade-up">
+          音楽でも、映像でも、テキストでもない。<br />
+          知覚的信号の相互作用によって構成された<br />
+          詩的メディア形式です。
+        </p>
+      </div>
+      <blockquote class="manifesto__quote" data-animate="fade-up">
+        <p>A single visual source generates<br />multiple forms of expression.</p>
+        <p class="manifesto__quote-jp">ひとつの視覚的源泉が、複数の表現形式を生み出す。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 3: PROCESS -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <h2 class="section-title">The Process</h2>
+        <p class="section-subtitle">ひとつの画像から、ひとつの作品へ。</p>
+      </div>
+
+      <div class="process__timeline">
+        <div class="process__line" aria-hidden="true"></div>
+
+        <!-- Step 1 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">01</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag">Luma2MIDI</span>
+            </div>
+            <h3 class="process__step-title">Visual Spectrum Analysis</h3>
+            <p class="process__step-text">The process begins with a single image. Its color, gradients, and luminance are analyzed and translated into MIDI — the language of music. The image becomes the origin of sound.</p>
+            <p class="process__step-text-jp">すべては一枚の画像から始まる。色彩、グラデーション、輝度を解析し、音楽の言語であるMIDIデータへ変換する。画像が、音の出発点になる。</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">02</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag tag--secondary">DAW</span>
+            </div>
+            <h3 class="process__step-title">Musical Construction</h3>
+            <p class="process__step-text">MIDI signals are imported into a DAW. The raw data becomes structural material — instruments, rhythms, harmonies are shaped through intuitive artistic decisions.</p>
+            <p class="process__step-text-jp">生成されたMIDIをDAWに取り込み、楽器、リズム、ハーモニーを構築する。データは素材に過ぎない。作家の直感が、楽曲の性格を決定する。</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">03</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag">Harmonic-Reframe</span>
+              <span class="tag">Water-Brain-Modulator</span>
+              <span class="tag">SpectraLine</span>
+            </div>
+            <h3 class="process__step-title">Sonic Optimization</h3>
+            <p class="process__step-text">The composition is refined through specialized sonic tools. Frequencies are retuned to natural harmonics. Spatial depth is enhanced. Spectral balance is sculpted. The music reaches its final, resonant form.</p>
+            <p class="process__step-text-jp">完成した楽曲を専門的な音響ツールで仕上げる。432Hzなど自然倍音への再チューニング。空間的な深みの強化。スペクトルの造形。音楽が、最も深い響きに到達する。</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">04</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag">Vapor-Signal</span>
+              <span class="tag">Image-Flow</span>
+            </div>
+            <h3 class="process__step-title">Derived Visual Elements</h3>
+            <p class="process__step-text">The same original image is now transformed visually. Mist textures, fluid distortions, atmospheric layers — derived elements that share the DNA of the source while expanding its visual vocabulary.</p>
+            <p class="process__step-text-jp">同じ元画像を、今度は視覚的に展開する。霧のテクスチャ、流体の歪み、大気的なレイヤー。元画像のDNAを保ちながら、視覚的語彙を拡張する派生素材を生成する。</p>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">05</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag">Image-Flow</span>
+            </div>
+            <h3 class="process__step-title">Timeline-Based Visual Composition</h3>
+            <p class="process__step-text">Audio and visual materials converge on a timeline. Images are sequenced, layered, and transitioned while listening to the music. Visual flow and sonic structure become one.</p>
+            <p class="process__step-text-jp">音と映像がタイムライン上で交差する。音楽を聴きながら、画像のシーケンス、レイヤー、トランジションを構築。視覚の流れと音の構造がひとつになる。</p>
+          </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">06</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag">SignalType</span>
+            </div>
+            <h3 class="process__step-title">Glitch Text Generation</h3>
+            <p class="process__step-text">Poetry enters the signal field. Text is not subtitles — it is a visual signal, glitched and synchronized with the sonic structure. Language becomes light, motion, interference.</p>
+            <p class="process__step-text-jp">詩がシグナルの場に入る。字幕ではない——テキストは視覚的信号として、グリッチし、音の構造と同期する。言語が光になり、動きになり、干渉になる。</p>
+          </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="process__step" data-animate="fade-up">
+          <div class="process__step-number">07</div>
+          <div class="process__step-content">
+            <div class="process__step-tags">
+              <span class="tag tag--secondary">Video Editor</span>
+            </div>
+            <h3 class="process__step-title">Final Composition</h3>
+            <p class="process__step-text">All layers converge. Music. Visual composition. Mist effects. Glitch text. Through careful layering and timing, the work is assembled into its final audiovisual form.</p>
+            <p class="process__step-text-jp">すべてのレイヤーが収束する。音楽。映像構成。ミストエフェクト。グリッチテキスト。注意深い重ね合わせとタイミングの調整により、作品は最終的な視聴覚形式へと組み上がる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 4: TOOLKIT -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="toolkit" id="toolkit">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <h2 class="section-title">The Toolkit</h2>
+        <p class="section-subtitle">これがPoetic Signalを可能にする7つのツールです。</p>
+      </div>
+
+      <div class="toolkit__grid">
+        <!-- App 1: Luma2MIDI -->
+        <div class="app-card" data-animate="fade-up" data-app="luma2midi">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 8 L36 24 L24 40 L12 24 Z" stroke="#7c5cfc" stroke-width="1.5" fill="none" opacity="0.9"/><line x1="4" y1="20" x2="12" y2="24" stroke="#5ce0fc" stroke-width="1.2" opacity="0.6"/><line x1="36" y1="24" x2="44" y2="16" stroke="#7c5cfc" stroke-width="1.2" opacity="0.7"/><line x1="36" y1="24" x2="44" y2="24" stroke="#9b7dff" stroke-width="1.2" opacity="0.5"/><line x1="36" y1="24" x2="44" y2="32" stroke="#5ce0fc" stroke-width="1.2" opacity="0.7"/><circle cx="44" cy="16" r="2" fill="#7c5cfc" opacity="0.8"/><circle cx="44" cy="32" r="2" fill="#5ce0fc" opacity="0.8"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 1</div>
+          </div>
+          <h3 class="app-card__name">Luma2MIDI</h3>
+          <p class="app-card__tagline">Generative Video-to-MIDI Sequencer & Synthesizer</p>
+          <p class="app-card__desc">Turn light into music. Translates video luminance and color data into living MIDI sequences in real-time. Paired with a built-in FM Synthesizer, it turns any video into a generative instrument.</p>
+          <p class="app-card__desc-jp">光を音楽に変える。映像の輝度と色彩をリアルタイムで解析し、生きたMIDIシーケンスへ変換。内蔵FMシンセサイザーとの連動で、映像そのものが楽器になります。</p>
+          <div class="app-card__features">
+            <span>Real-time Translation</span>
+            <span>FM Synth Engine</span>
+            <span>MIDI Export</span>
+          </div>
+        </div>
+
+        <!-- App 2: Harmonic-Reframe -->
+        <div class="app-card" data-animate="fade-up" data-app="harmonic-reframe">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#7c5cfc" stroke-width="1" opacity="0.3"/><circle cx="24" cy="24" r="12" stroke="#7c5cfc" stroke-width="1.2" opacity="0.5"/><circle cx="24" cy="24" r="6" stroke="#5ce0fc" stroke-width="1.5" opacity="0.7"/><line x1="24" y1="30" x2="24" y2="40" stroke="#7c5cfc" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14 L21 26 Q21 28 24 28 Q27 28 27 26 L27 14" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M17 20 Q19 18 17 16" stroke="#5ce0fc" stroke-width="1" opacity="0.5" fill="none" stroke-linecap="round"/><path d="M31 20 Q29 18 31 16" stroke="#5ce0fc" stroke-width="1" opacity="0.5" fill="none" stroke-linecap="round"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 3</div>
+          </div>
+          <h3 class="app-card__name">Harmonic-Reframe</h3>
+          <p class="app-card__tagline">Solfeggio & Harmonic Spatial Audio Processor</p>
+          <p class="app-card__desc">Reframe your frequency. Retune standard A=440Hz music to natural healing frequencies — 432Hz, 528Hz, and the Solfeggio spectrum. Expand stereo width through mid/side processing.</p>
+          <p class="app-card__desc-jp">周波数を再構築する。A=440Hzの標準音楽を432Hzや528Hzへリアルタイムで再チューニング。Mid/Side処理によるステレオ空間の拡張で、広大な音場を実現。</p>
+          <div class="app-card__features">
+            <span>432Hz / 528Hz Retune</span>
+            <span>Stereo Expansion</span>
+            <span>Waveform Visualizer</span>
+          </div>
+        </div>
+
+        <!-- App 3: Water-Brain-Modulator -->
+        <div class="app-card" data-animate="fade-up" data-app="water-brain">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M24 6 Q24 6 32 20 Q38 30 32 36 Q28 42 24 42 Q20 42 16 36 Q10 30 16 20 Q24 6 24 6Z" stroke="#7c5cfc" stroke-width="1.5" fill="none"/><path d="M16 26 L19 26 L21 22 L23 30 L25 20 L27 28 L29 24 L32 26" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 38 Q24 36 28 38" stroke="#7c5cfc" stroke-width="1" opacity="0.4" fill="none"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 3</div>
+          </div>
+          <h3 class="app-card__name">Water-Brain-Modulator</h3>
+          <p class="app-card__tagline">Binaural & 1/f Organic Audio Entrainment</p>
+          <p class="app-card__desc">Entrain the mind through sound. Inject organic 1/f pink noise modulation — volume, panning, and filters breathe and drift naturally. Generate true binaural beats targeting brainwave states.</p>
+          <p class="app-card__desc-jp">音で脳を同調させる。1/fゆらぎによる有機的モジュレーションで自然な呼吸と漂いを生み出し、真のバイノーラルビートを生成します。</p>
+          <div class="app-card__features">
+            <span>1/f Drift Modulator</span>
+            <span>Binaural Beats</span>
+            <span>WAV Export</span>
+          </div>
+        </div>
+
+        <!-- App 4: SpectraLine -->
+        <div class="app-card" data-animate="fade-up" data-app="spectraline">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><line x1="10" y1="38" x2="10" y2="28" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.5"/><line x1="16" y1="38" x2="16" y2="22" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="22" y1="38" x2="22" y2="14" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="28" y1="38" x2="28" y2="18" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.7"/><line x1="34" y1="38" x2="34" y2="24" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="40" y1="38" x2="40" y2="30" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.4"/><path d="M8 30 Q14 20 20 12 Q26 18 32 16 Q38 22 42 28" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="42" cy="28" r="2" fill="#5ce0fc" opacity="0.6"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 3</div>
+          </div>
+          <h3 class="app-card__name">SpectraLine</h3>
+          <p class="app-card__tagline">Multiband Spectral Audio Sculpting System</p>
+          <p class="app-card__desc">Paint the sound. Break audio into discrete frequency bands and draw curves that shape the spectrum. Your lines become EQ envelopes, dynamic filters, and living spectral sculptures.</p>
+          <p class="app-card__desc-jp">音を描く。オーディオを複数の周波数帯域に分割し、画面上に描いた曲線がそのままスペクトルのフィルターとして機能する直感的なサウンドスカルプティング。</p>
+          <div class="app-card__features">
+            <span>Spectral Drawing</span>
+            <span>Multiband Isolation</span>
+            <span>Precision Filters</span>
+          </div>
+        </div>
+
+        <!-- App 5: Vapor-Signal -->
+        <div class="app-card" data-animate="fade-up" data-app="vapor-signal">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M14 40 Q14 34 18 30 Q14 26 18 22 Q14 18 18 14" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/><path d="M24 42 Q24 36 28 32 Q24 28 28 24 Q24 20 28 16 Q24 12 28 8" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.9"/><path d="M34 40 Q34 34 30 30 Q34 26 30 22 Q34 18 30 14" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/><circle cx="20" cy="18" r="1" fill="#5ce0fc" opacity="0.4"/><circle cx="30" cy="12" r="1.5" fill="#7c5cfc" opacity="0.3"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 4</div>
+          </div>
+          <h3 class="app-card__name">Vapor-Signal</h3>
+          <p class="app-card__tagline">Ambient & Atmospheric Mist Engine</p>
+          <p class="app-card__desc">Inject atmosphere. Organic mist, VHS artifacts, light-leaks, atmospheric noise — controlled "vapor" signals that transform clean images into dreamlike visual landscapes.</p>
+          <p class="app-card__desc-jp">空気を注入する。霧の漂い、VHSノイズ、光漏れ——制御された蒸気のシグナルが、クリーンな画像を夢のようなビジュアルへ変える。</p>
+          <div class="app-card__features">
+            <span>WebGL Shaders</span>
+            <span>Analog Degradation</span>
+            <span>Real-time Render</span>
+          </div>
+        </div>
+
+        <!-- App 6: Image-Flow -->
+        <div class="app-card" data-animate="fade-up" data-app="image-flow">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M10 10 L38 10 Q36 18 38 24 Q40 30 38 38 L10 38 Q12 30 10 24 Q8 18 10 10Z" stroke="#7c5cfc" stroke-width="1.2" fill="none" opacity="0.4"/><path d="M12 18 Q20 14 28 20 Q36 26 38 18" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M10 26 Q18 22 26 28 Q34 34 40 26" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M12 34 Q20 30 28 34 Q36 38 38 34" stroke="#7c5cfc" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 4 · 5</div>
+          </div>
+          <h3 class="app-card__name">Image-Flow</h3>
+          <p class="app-card__tagline">Fluid Dynamics Image Distortion</p>
+          <p class="app-card__desc">Make pixels liquid. Fluid dynamic simulations let you melt, drip, swirl, and warp images interactively. Bridge the gap between still photography and mesmerizing digital flow art.</p>
+          <p class="app-card__desc-jp">ピクセルを液体にする。流体力学シミュレーションにより画像を溶かし、滴らせ、渦を巻かせる。静止画から催眠的なデジタル・フローアートを創出。</p>
+          <div class="app-card__features">
+            <span>Fluid Simulation</span>
+            <span>Interactive Warping</span>
+            <span>Cinematic Export</span>
+          </div>
+        </div>
+
+        <!-- App 7: SignalType -->
+        <div class="app-card" data-animate="fade-up" data-app="signaltype">
+          <div class="app-card__glow"></div>
+          <div class="app-card__header">
+            <div class="app-card__icon">
+              <svg viewBox="0 0 48 48" fill="none"><path d="M16 38 L24 10 L32 38" stroke="#7c5cfc" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="19" y1="28" x2="29" y2="28" stroke="#7c5cfc" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="20" x2="36" y2="20" stroke="#5ce0fc" stroke-width="0.8" opacity="0.5"/><rect x="18" y="19" width="8" height="3" fill="#5ce0fc" opacity="0.12"/><path d="M28 22 L30 16" stroke="#5ce0fc" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/><line x1="8" y1="32" x2="14" y2="32" stroke="#7c5cfc" stroke-width="1" opacity="0.3"/><line x1="34" y1="14" x2="42" y2="14" stroke="#5ce0fc" stroke-width="1" opacity="0.3"/><line x1="36" y1="36" x2="36" y2="42" stroke="#5ce0fc" stroke-width="1.5" opacity="0.7" stroke-linecap="round"/></svg>
+            </div>
+            <div class="app-card__step-badge">Step 6</div>
+          </div>
+          <h3 class="app-card__name">SignalType</h3>
+          <p class="app-card__tagline">Kinetic Typography & Typographic Interference</p>
+          <p class="app-card__desc">Text as signal. Words become dynamic 3D elements that react to audio inputs and glitch algorithms. Generate animated titles, corrupted letterforms, and abstract typographic art.</p>
+          <p class="app-card__desc-jp">テキストを信号にする。文字を3Dキネティックオブジェクトに変換し、音やグリッチに反応。アニメーション・タイトル、破壊的文字造形をブラウザ上で生成。</p>
+          <div class="app-card__features">
+            <span>3D Text Rendering</span>
+            <span>Glitch Injection</span>
+            <span>Audio-Reactive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 5: CTA / PRICING -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header" data-animate="fade-up">
+        <h2 class="section-title">Start creating.</h2>
+        <p class="section-subtitle">あなたのPoetic Signalを、始めよう。</p>
+      </div>
+
+      <p class="pricing__lead" data-animate="fade-up">
+        Each tool is available individually, or unlock the complete toolkit as a bundle.<br />
+        All apps run in your browser. No installation required.
+      </p>
+      <p class="pricing__lead pricing__lead--jp" data-animate="fade-up">
+        各アプリは個別に入手できます。バンドルですべてを一括で手に入れることも可能です。<br />
+        すべてブラウザ上で動作。インストール不要。
+      </p>
+
+      <div class="pricing__cards" data-animate="fade-up">
+        <!-- Individual -->
+        <div class="pricing__card">
+          <div class="pricing__card-label">Individual App</div>
+          <div class="pricing__card-price">
+            <span class="pricing__card-currency">$</span>
+            <span class="pricing__card-amount">15</span>
+            <span class="pricing__card-period">/ app</span>
+          </div>
+          <p class="pricing__card-desc">Choose one tool to start with. Perfect for exploring a single creative signal.</p>
+          <ul class="pricing__card-list">
+            <li>Single app access</li>
+            <li>Browser-based</li>
+            <li>Full export capabilities</li>
+          </ul>
+          <a href="#" class="pricing__card-btn pricing__card-btn--secondary">Choose App</a>
+        </div>
+
+        <!-- Bundle -->
+        <div class="pricing__card pricing__card--featured">
+          <div class="pricing__card-badge">Recommended</div>
+          <div class="pricing__card-label">Complete Toolkit</div>
+          <div class="pricing__card-price">
+            <span class="pricing__card-currency">$</span>
+            <span class="pricing__card-amount">49</span>
+          </div>
+          <p class="pricing__card-original"><s>$105</s> — Save over 50%</p>
+          <p class="pricing__card-desc">All 7 apps. Full creative pipeline. From image to final audiovisual composition.</p>
+          <p class="pricing__card-desc-jp">ひとつの画像から、ひとつの作品へ。すべてのツールで完全なワークフローを。</p>
+          <ul class="pricing__card-list">
+            <li>All 7 applications</li>
+            <li>Complete signal pipeline</li>
+            <li>Browser-based</li>
+            <li>Full export capabilities</li>
+          </ul>
+          <a href="#" class="pricing__card-btn">Get the Toolkit →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__brand">POETIC SIGNAL</p>
+        <p class="footer__copy">&copy; 2026 Poetic Signal Toolkit. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

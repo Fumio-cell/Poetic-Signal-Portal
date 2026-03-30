@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- SignalType: Glitched typography -->
+  <!-- Main letter "A" (glitched) -->
+  <path d="M16 38 L24 10 L32 38" stroke="#7c5cfc" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="19" y1="28" x2="29" y2="28" stroke="#7c5cfc" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Glitch displacement slices -->
+  <line x1="14" y1="20" x2="36" y2="20" stroke="#5ce0fc" stroke-width="0.8" opacity="0.5"/>
+  <rect x="18" y="19" width="8" height="3" fill="#5ce0fc" opacity="0.12"/>
+  <!-- Glitch offset fragment -->
+  <path d="M28 22 L30 16" stroke="#5ce0fc" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/>
+  <!-- Signal interference lines -->
+  <line x1="8" y1="32" x2="14" y2="32" stroke="#7c5cfc" stroke-width="1" opacity="0.3"/>
+  <line x1="34" y1="14" x2="42" y2="14" stroke="#5ce0fc" stroke-width="1" opacity="0.3"/>
+  <line x1="36" y1="36" x2="42" y2="36" stroke="#7c5cfc" stroke-width="1" opacity="0.2"/>
+  <!-- Cursor blink -->
+  <line x1="36" y1="36" x2="36" y2="42" stroke="#5ce0fc" stroke-width="1.5" opacity="0.7" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Vapor-Signal: Rising mist/vapor trails -->
+  <!-- Vapor trail 1 (left) -->
+  <path d="M14 40 Q14 34 18 30 Q14 26 18 22 Q14 18 18 14" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- Vapor trail 2 (center) -->
+  <path d="M24 42 Q24 36 28 32 Q24 28 28 24 Q24 20 28 16 Q24 12 28 8" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <!-- Vapor trail 3 (right) -->
+  <path d="M34 40 Q34 34 30 30 Q34 26 30 22 Q34 18 30 14" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- Mist cloud at base -->
+  <ellipse cx="24" cy="42" rx="14" ry="3" fill="#7c5cfc" opacity="0.1"/>
+  <!-- Floating particles -->
+  <circle cx="20" cy="18" r="1" fill="#5ce0fc" opacity="0.4"/>
+  <circle cx="30" cy="12" r="1.5" fill="#7c5cfc" opacity="0.3"/>
+  <circle cx="16" cy="24" r="1" fill="#5ce0fc" opacity="0.3"/>
+</svg>

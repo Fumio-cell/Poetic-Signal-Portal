@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Image-Flow: Fluid dynamics / liquid flow -->
+  <!-- Image frame (distorted) -->
+  <path d="M10 10 L38 10 Q36 18 38 24 Q40 30 38 38 L10 38 Q12 30 10 24 Q8 18 10 10Z" stroke="#7c5cfc" stroke-width="1.2" fill="none" opacity="0.4"/>
+  <!-- Fluid flow curves -->
+  <path d="M12 18 Q20 14 28 20 Q36 26 38 18" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M10 26 Q18 22 26 28 Q34 34 40 26" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M12 34 Q20 30 28 34 Q36 38 38 34" stroke="#7c5cfc" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- Fluid drip -->
+  <path d="M28 38 Q28 42 30 44" stroke="#5ce0fc" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="30" cy="44" r="1" fill="#5ce0fc" opacity="0.4"/>
+</svg>

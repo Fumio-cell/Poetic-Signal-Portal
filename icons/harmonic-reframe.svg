@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Harmonic-Reframe: Concentric frequency rings with tuning fork -->
+  <!-- Outer ring -->
+  <circle cx="24" cy="24" r="18" stroke="#7c5cfc" stroke-width="1" opacity="0.3"/>
+  <!-- Middle ring -->
+  <circle cx="24" cy="24" r="12" stroke="#7c5cfc" stroke-width="1.2" opacity="0.5"/>
+  <!-- Inner ring -->
+  <circle cx="24" cy="24" r="6" stroke="#5ce0fc" stroke-width="1.5" opacity="0.7"/>
+  <!-- Tuning fork -->
+  <line x1="24" y1="30" x2="24" y2="40" stroke="#7c5cfc" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M21 14 L21 26 Q21 28 24 28 Q27 28 27 26 L27 14" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Vibration waves -->
+  <path d="M17 20 Q19 18 17 16" stroke="#5ce0fc" stroke-width="1" opacity="0.5" fill="none" stroke-linecap="round"/>
+  <path d="M31 20 Q29 18 31 16" stroke="#5ce0fc" stroke-width="1" opacity="0.5" fill="none" stroke-linecap="round"/>
+</svg>
