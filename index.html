@@ -1,589 +1,960 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poetic Signal — Sound. Image. Language.</title>
-  <meta name="description" content="Poetic Signal is an abstract poetic form in which sound, image, and language operate as equal signals within a unified perceptual field. Explore the 7-app creative toolkit." />
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://poeticsignal.com/" />
-  <meta property="og:title" content="Poetic Signal — Audio-Visual Creative Toolkit" />
-  <meta property="og:description" content="A unified perceptual field. Explore 8 specialized browser-based tools for modern digital poetry." />
-  <meta property="og:image" content="https://poeticsignal.com/icons/logo-full.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poetic Signal — Sound. Image. Language.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500&display=block" rel="stylesheet">
+<style>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="icons/favicon.png" />
-  <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+  :root{
+    --paper: #F2EFE6;
+    --ink: #1A1D1B;
+    --moss: #6E7D6F;
+    --moss-deep: #4A5550;
+    --suoh: #9E3D3F;
+    --suoh-faint: rgba(158,61,63,0.16);
+    --rule: rgba(26,29,27,0.14);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  ::selection{ background:var(--suoh-faint); }
+
+  .display{ font-family:'Fraunces', serif; font-optical-sizing:auto; }
+  .mono{ font-family:'JetBrains Mono', monospace; letter-spacing:0.04em; }
+  [lang-jp]{ font-family:'Shippori Mincho', serif; }
+  [lang-jp].body-jp{ font-family:'Noto Sans JP', sans-serif; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  /* ---------- painting backdrop ---------- */
+  .art-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .art-layer{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 1.4s ease;
+  }
+  .art-layer.is-active{ opacity:1; }
+  .art-layer-water{ background-image:url('assets/hydrological-map.jpg'); }
+  .art-layer-cell{ background-image:url('assets/cellular-field.jpg'); }
+  .art-wash{ position:absolute; inset:0; background:#FFFFFF; opacity:0.6; }
+  .art-grain{
+    position:absolute; inset:0; opacity:0.35; mix-blend-mode:multiply;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(26,29,27,0.04) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(26,29,27,0.035) 0%, transparent 50%);
+  }
+
+  main, header, nav, footer{ position:relative; z-index:1; }
+
+  #ink-canvas{
+    position:fixed; inset:0; pointer-events:none; z-index:40;
+    mix-blend-mode:multiply; opacity:0.28;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:30;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:24px 56px;
+    background:linear-gradient(rgba(255,255,255,0.6) 55%, transparent);
+    backdrop-filter:blur(2px);
+  }
+  .nav-mark{ font-family:'Fraunces', serif; font-size:18px; font-weight:500; }
+  .nav-right{ display:flex; align-items:center; gap:36px; }
+  .nav-links{
+    display:flex; gap:32px;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px;
+    letter-spacing:0.05em; text-transform:uppercase; color:var(--moss-deep);
+  }
+  .nav-links a{ position:relative; padding-bottom:3px; }
+  .nav-links a::after{
+    content:''; position:absolute; bottom:0; left:0; width:0%; height:1px;
+    background:var(--suoh); transition:width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px;
+    letter-spacing:0.05em; text-transform:uppercase;
+    border:1px solid var(--ink); padding:9px 18px; border-radius:20px;
+    transition:background 0.3s, color 0.3s;
+  }
+  .nav-cta:hover{ background:var(--ink); color:var(--paper); }
+  .lang-toggle{
+    display:flex; align-items:center; gap:2px;
+    font-family:'JetBrains Mono', monospace; font-size:11.5px;
+    border:1px solid var(--rule); border-radius:20px; padding:4px;
+  }
+  .lang-toggle button{
+    background:none; border:none; cursor:pointer; padding:6px 13px;
+    border-radius:16px; color:var(--moss-deep); font-family:inherit;
+    font-size:inherit; transition:background 0.3s, color 0.3s;
+  }
+  .lang-toggle button.active{ background:var(--ink); color:var(--paper); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh; display:flex; flex-direction:column;
+    justify-content:center; padding:0 56px; position:relative;
+  }
+  .hero-inner{ max-width:1400px; margin:0 auto; width:100%; }
+  .kigo{
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    letter-spacing:0.16em; color:var(--moss); text-transform:uppercase;
+    margin-bottom:28px; display:block;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif; font-optical-sizing:auto; font-weight:500;
+    font-size:clamp(2.8rem, 6.4vw, 6rem); line-height:1.05;
+    letter-spacing:-0.01em; max-width:14ch;
+  }
+  .hero h1 em{ font-style:italic; font-weight:400; color:var(--moss-deep); }
+  .hero-foot{
+    display:grid; grid-template-columns:1fr auto auto; gap:48px; align-items:end;
+    max-width:1400px; margin-top:72px; padding-top:28px; border-top:1px solid var(--rule);
+  }
+  .hero-foot p{ max-width:48ch; font-size:17px; color:var(--moss-deep); }
+  .hero-stat .num{ font-family:'Fraunces', serif; font-size:2.2rem; font-weight:500; display:block; line-height:1; }
+  .hero-stat .label{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--moss); margin-top:8px; display:block;
+  }
+
+  /* ---------- section shared ---------- */
+  section{ position:relative; padding:140px 56px; max-width:1400px; margin:0 auto; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--moss); display:flex; align-items:center;
+    gap:14px; margin-bottom:32px;
+  }
+  .eyebrow::before{ content:''; width:28px; height:1px; background:var(--suoh); }
+
+  /* ---------- manifesto ---------- */
+  .manifesto{ text-align:center; }
+  .manifesto-body{ max-width:46ch; margin:0 auto; }
+  .manifesto h2{
+    font-family:'Fraunces', serif; font-weight:500; font-style:italic;
+    font-size:clamp(1.7rem, 3vw, 2.4rem); line-height:1.5; color:var(--ink);
+  }
+  .manifesto .negation{
+    font-family:'JetBrains Mono', monospace; font-size:13px; letter-spacing:0.04em;
+    color:var(--moss-deep); margin:36px 0; text-transform:uppercase;
+  }
+  .manifesto-jp{
+    margin-top:48px; padding-top:36px; border-top:1px solid var(--rule);
+    font-size:15px; line-height:2; color:var(--moss-deep);
+  }
+
+  /* ---------- process timeline ---------- */
+  .process-head{ max-width:64ch; margin-bottom:88px; }
+  .process-head h2{
+    font-family:'Fraunces', serif; font-weight:500;
+    font-size:clamp(2rem, 3.4vw, 2.75rem); line-height:1.25;
+  }
+  .timeline{ position:relative; }
+  .timeline::before{
+    content:''; position:absolute; left:54px; top:8px; bottom:8px; width:1px;
+    background:var(--rule);
+  }
+  .step{
+    display:grid; grid-template-columns:108px 1fr; gap:40px;
+    padding:40px 0; position:relative;
+  }
+  .step:first-child{ padding-top:0; }
+  .step-num{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--suoh);
+    position:relative;
+  }
+  .step-num::after{
+    content:''; position:absolute; left:50px; top:6px;
+    width:9px; height:9px; border-radius:50%; background:var(--suoh);
+  }
+  .step-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .step-tag{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:0.04em;
+    border:1px solid var(--rule); border-radius:12px; padding:3px 10px; color:var(--moss-deep);
+  }
+  .step h3{ font-family:'Fraunces', serif; font-weight:500; font-size:1.5rem; margin-bottom:12px; }
+  .step p{ color:var(--moss-deep); font-size:15.5px; max-width:62ch; line-height:1.75; }
+
+  /* ---------- thesis quote ---------- */
+  .thesis{ text-align:center; padding:120px 56px; }
+  .thesis blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:400;
+    font-size:clamp(1.5rem, 2.6vw, 2.1rem); line-height:1.5; max-width:24ch; margin:0 auto;
+  }
+  .thesis .jp-line{ margin-top:24px; font-family:'Shippori Mincho', serif; font-size:14px; color:var(--moss); letter-spacing:0.06em; }
+
+  /* ---------- tools ---------- */
+  .tools-head{ margin-bottom:64px; max-width:64ch; }
+  .tools-head h2{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 3.4vw, 2.75rem); line-height:1.25; }
+
+  .tool-card{
+    display:grid; grid-template-columns:auto 1.7fr 3fr auto; gap:28px; align-items:center;
+    padding:32px 0; border-top:1px solid var(--rule);
+  }
+  .tool-card:last-child{ border-bottom:1px solid var(--rule); }
+
+  .tool-icon{
+    width:44px; height:44px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tool-icon svg{ width:32px; height:32px; }
+
+  .tool-id{
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--suoh);
+    text-transform:uppercase; margin-bottom:6px; display:block;
+  }
+  .tool-name{ font-family:'Fraunces', serif; font-size:1.4rem; font-weight:500; }
+  .tool-tagline{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--moss); margin-top:6px; }
+
+  .tool-desc{ color:var(--moss-deep); font-size:15px; max-width:46ch; }
+  .tool-io{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--moss-deep); margin-top:10px; }
+  .tool-io .arrow{ color:var(--suoh); margin:0 5px; }
+
+  .tool-actions{ display:flex; flex-direction:column; gap:10px; align-items:flex-end; text-align:right; }
+  .tool-link{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; letter-spacing:0.04em;
+    color:var(--ink); white-space:nowrap;
+  }
+  .tool-link::after{ content:' →'; }
+  .tool-buy{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.04em;
+    text-transform:uppercase; border:1px solid var(--ink); padding:8px 16px;
+    border-radius:16px; white-space:nowrap; transition:background 0.3s, color 0.3s;
+  }
+  .tool-buy:hover{ background:var(--ink); color:var(--paper); }
+  .tool-buy.soon{ border-color:var(--rule); color:var(--moss); pointer-events:none; }
+
+  /* ---------- pricing ---------- */
+  .pricing-head{ text-align:center; max-width:54ch; margin:0 auto 72px; }
+  .pricing-head h2{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 3.4vw, 2.75rem); line-height:1.25; }
+  .pricing-head p{ color:var(--moss-deep); margin-top:18px; font-size:16px; }
+
+  .pricing-grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:32px; align-items:stretch; }
+  .price-card{
+    border:1px solid var(--rule); padding:44px; display:flex; flex-direction:column;
+    background:rgba(255,255,255,0.4);
+  }
+  .price-card.featured{ border-color:var(--ink); position:relative; }
+  .price-badge{
+    position:absolute; top:-13px; left:44px; background:var(--ink); color:var(--paper);
+    font-family:'JetBrains Mono', monospace; font-size:10.5px; letter-spacing:0.06em;
+    text-transform:uppercase; padding:5px 14px; border-radius:12px;
+  }
+  .price-name{ font-family:'JetBrains Mono', monospace; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--moss); }
+  .price-num{ font-family:'Fraunces', serif; font-size:3rem; font-weight:500; margin:14px 0 4px; }
+  .price-was{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--moss); }
+  .price-was del{ opacity:0.6; }
+  .price-desc{ color:var(--moss-deep); font-size:15px; margin:20px 0 28px; }
+  .price-features{ list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:32px; flex-grow:1; }
+  .price-features li{
+    font-size:14.5px; color:var(--moss-deep); padding-left:20px; position:relative;
+  }
+  .price-features li::before{ content:'—'; position:absolute; left:0; color:var(--suoh); }
+  .price-cta{
+    font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.06em;
+    text-transform:uppercase; text-align:center; padding:15px; border:1px solid var(--ink);
+    border-radius:2px; transition:background 0.3s, color 0.3s;
+  }
+  .price-cta.solid{ background:var(--ink); color:var(--paper); }
+  .price-cta.solid:hover{ background:var(--moss-deep); border-color:var(--moss-deep); }
+  .price-cta:not(.solid):hover{ background:var(--ink); color:var(--paper); }
+
+  /* ---------- FAQ ---------- */
+  .faq-head{ max-width:54ch; margin-bottom:56px; }
+  .faq-head h2{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 3.4vw, 2.75rem); }
+  .faq-item{ border-top:1px solid var(--rule); padding:28px 0; }
+  .faq-item:last-child{ border-bottom:1px solid var(--rule); }
+  .faq-item h3{ font-family:'Fraunces', serif; font-weight:500; font-size:1.2rem; margin-bottom:10px; }
+  .faq-item p{ color:var(--moss-deep); font-size:15px; max-width:62ch; }
+
+  /* ---------- closing ---------- */
+  .closing{ text-align:center; padding-bottom:80px; }
+  .closing h2{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2.2rem, 4vw, 3.2rem); line-height:1.2; max-width:18ch; margin:0 auto 24px; }
+  .closing p{ color:var(--moss-deep); max-width:44ch; margin:0 auto 40px; }
+  .closing-cta{
+    display:inline-block; font-family:'JetBrains Mono', monospace; font-size:13px;
+    letter-spacing:0.06em; text-transform:uppercase; background:var(--ink); color:var(--paper);
+    padding:18px 40px; transition:background 0.3s;
+  }
+  .closing-cta:hover{ background:var(--moss-deep); }
+
+  footer{
+    border-top:1px solid var(--rule); padding:48px 56px; max-width:1400px; margin:0 auto;
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px;
+  }
+  footer .foot-mark{ font-family:'Fraunces', serif; font-size:18px; font-weight:500; margin-bottom:8px; }
+  footer .foot-contact{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--moss); }
+  footer h4{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--moss); margin-bottom:14px;
+  }
+  footer ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  footer ul a{ font-size:14px; color:var(--moss-deep); }
+  footer ul a:hover{ color:var(--ink); }
+  .foot-bottom{
+    max-width:1400px; margin:0 auto; padding:24px 56px 48px;
+    font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--moss);
+  }
+
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1); }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    #ink-canvas{ display:none; }
+  }
+
+  [data-lang]{ display:none !important; }
+  [data-lang].lang-active{ display:revert !important; }
+  span[data-lang].lang-active{ display:inline !important; }
+  div[data-lang].lang-active{ display:block !important; }
+
+  @media (max-width:980px){
+    nav{ padding:20px 22px; }
+    .nav-links{ display:none; }
+    .hero{ padding:0 22px; }
+    .hero-foot{ grid-template-columns:1fr; gap:24px; }
+    section{ padding:88px 22px; }
+    .timeline::before{ left:28px; }
+    .step{ grid-template-columns:60px 1fr; gap:20px; }
+    .step-num::after{ left:24px; }
+    .tool-card{ grid-template-columns:1fr; gap:16px; }
+    .tool-actions{ align-items:flex-start; text-align:left; flex-direction:row; }
+    .pricing-grid{ grid-template-columns:1fr; }
+    footer{ grid-template-columns:1fr 1fr; padding:40px 22px; }
+    .foot-bottom{ padding:20px 22px 40px; }
+  }
+
+</style>
 </head>
 <body>
-  <!-- ═══════════════════════════════════════ -->
-  <!-- GRAIN OVERLAY -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- NAVIGATION -->
-  <!-- ═══════════════════════════════════════ -->
-  <nav class="nav" id="nav">
-    <a href="#hero" class="nav__logo">POETIC SIGNAL</a>
-    <div class="nav__links">
-      <a href="#manifesto">Manifesto</a>
-      <a href="#process">Process</a>
-      <a href="#toolkit">Toolkit</a>
-      <a href="#pricing" class="nav__cta">Get Toolkit</a>
-    </div>
-  </nav>
+<div class="art-backdrop">
+  <div class="art-layer art-layer-water is-active" data-art="water"></div>
+  <div class="art-layer art-layer-cell" data-art="cell"></div>
+  <div class="art-wash"></div>
+  <div class="art-grain"></div>
+</div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION 1: HERO -->
-  <!-- ═══════════════════════════════════════ -->
-  <section class="hero" id="hero">
-    <div class="hero__bg">
-      <canvas id="hero-canvas"></canvas>
+<canvas id="ink-canvas"></canvas>
+
+<nav>
+  <div class="nav-mark">Poetic Signal</div>
+  <div class="nav-right">
+    <div class="nav-links">
+      <span data-lang="en"><a href="#manifesto">Manifesto</a></span>
+      <span data-lang="jp"><a href="#manifesto">理念</a></span>
+      <span data-lang="en"><a href="#process">Process</a></span>
+      <span data-lang="jp"><a href="#process">プロセス</a></span>
+      <span data-lang="en"><a href="#toolkit">Toolkit</a></span>
+      <span data-lang="jp"><a href="#toolkit">ツール</a></span>
     </div>
-    <div class="hero__content">
-      <div class="hero__logo-wrapper" data-animate="fade-up">
-        <canvas id="dynamic-logo-canvas" class="hero__symbol"></canvas>
+    <a href="#pricing" class="nav-cta">
+      <span data-lang="en">Get Toolkit</span>
+      <span data-lang="jp">購入する</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="active" data-set-lang="en">EN</button>
+      <button data-set-lang="jp">日本語</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="hero-inner">
+    <span class="kigo mono" data-lang="en">Sound · Image · Language — one practice</span>
+    <span class="kigo mono" data-lang="jp">音・像・言語 — ひとつの創作実践として</span>
+
+    <h1 class="display" data-lang="en">Sound. Image. Language.<br><em>One signal field.</em></h1>
+    <h1 class="display" data-lang="jp" lang-jp>音、映像、言葉。<br><em>ひとつの知覚の場として。</em></h1>
+
+    <div class="hero-foot">
+      <p data-lang="en">Poetic Signal is a toolkit for artists who move between audio, video, and text — eight small tools, one continuous pipeline, built by an artist who works this way every day.</p>
+      <p data-lang="jp" class="body-jp" lang-jp>Poetic Signalは、音・映像・言語を横断するアーティストのための道具群です。8つのツールが、ひとつの制作工程としてつながります。</p>
+      <div class="hero-stat">
+        <span class="num display">8</span>
+        <span class="label mono" data-lang="en">Tools</span>
+        <span class="label mono" data-lang="jp" lang-jp>ツール</span>
       </div>
-      <h1 class="hero__title" data-animate="fade-up" data-delay="100">
-        <span class="hero__title-main">Poetic Signal</span>
-      </h1>
-      <p class="hero__subtitle" data-animate="fade-up" data-delay="200">
-        Sound. Image. Language.<br />
-        A unified perceptual field.
-      </p>
-      <p class="hero__subtitle-jp" data-animate="fade-up" data-delay="400">
-        音、映像、言語 —— ひとつの知覚の場として。
-      </p>
-    </div>
-    <div class="hero__scroll-indicator" data-animate="fade-up" data-delay="800">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION 2: MANIFESTO -->
-  <!-- ═══════════════════════════════════════ -->
-  <section class="manifesto" id="manifesto">
-    <div class="container">
-      <div class="manifesto__label" data-animate="fade-up">What is Poetic Signal?</div>
-      <div class="manifesto__body">
-        <p class="manifesto__text" data-animate="fade-up">
-          Poetic Signal is an abstract poetic form<br />
-          in which sound, image, and language<br />
-          operate as equal signals<br />
-          within a unified perceptual field.
-        </p>
-        <p class="manifesto__text manifesto__text--emphasis" data-animate="fade-up">
-          It is not music. It is not video. It is not text.
-        </p>
-        <p class="manifesto__text" data-animate="fade-up">
-          It is a poetic media form<br />
-          composed of interacting perceptual signals.
-        </p>
-      </div>
-      <div class="manifesto__divider" data-animate="fade-up"></div>
-      <div class="manifesto__body manifesto__body--jp">
-        <p class="manifesto__text-jp" data-animate="fade-up">
-          Poetic Signalは、音・映像・言語が<br />
-          等価のシグナルとして共存する<br />
-          抽象的な詩的形式です。
-        </p>
-        <p class="manifesto__text-jp" data-animate="fade-up">
-          音楽でも、映像でも、テキストでもない。<br />
-          知覚的信号の相互作用によって構成された<br />
-          詩的メディア形式です。
-        </p>
-      </div>
-      <blockquote class="manifesto__quote" data-animate="fade-up">
-        <p>A single visual source generates<br />multiple forms of expression.</p>
-        <p class="manifesto__quote-jp">ひとつの視覚的源泉が、複数の表現形式を生み出す。</p>
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION 3: PROCESS -->
-  <!-- ═══════════════════════════════════════ -->
-  <section class="process" id="process">
-    <div class="container">
-      <div class="section-header" data-animate="fade-up">
-        <h2 class="section-title">The Process</h2>
-        <p class="section-subtitle">ひとつの画像から、ひとつの作品へ。</p>
-      </div>
-
-      <div class="process__timeline">
-        <div class="process__line" aria-hidden="true"></div>
-
-        <!-- Step 1 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">01</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag">Luma2MIDI</span>
-            </div>
-            <h3 class="process__step-title">Visual Spectrum Analysis</h3>
-            <p class="process__step-text">The process begins with a single image. Its color, gradients, and luminance are analyzed and translated into MIDI — the language of music. The image becomes the origin of sound.</p>
-            <p class="process__step-text-jp">すべては一枚の画像から始まる。色彩、グラデーション、輝度を解析し、音楽の言語であるMIDIデータへ変換する。画像が、音の出発点になる。</p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">02</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag tag--secondary">DAW</span>
-            </div>
-            <h3 class="process__step-title">Musical Construction</h3>
-            <p class="process__step-text">MIDI signals are imported into a DAW. The raw data becomes structural material — instruments, rhythms, harmonies are shaped through intuitive artistic decisions.</p>
-            <p class="process__step-text-jp">生成されたMIDIをDAWに取り込み、楽器、リズム、ハーモニーを構築する。データは素材に過ぎない。作家の直感が、楽曲の性格を決定する。</p>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">03</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag">Harmonic-Reframe</span>
-              <span class="tag">Water-Brain-Modulator</span>
-              <span class="tag">SpectraLine</span>
-            </div>
-            <h3 class="process__step-title">Sonic Optimization</h3>
-            <p class="process__step-text">The composition is refined through specialized sonic tools. Frequencies are retuned to natural harmonics. Spatial depth is enhanced. Spectral balance is sculpted. The music reaches its final, resonant form.</p>
-            <p class="process__step-text-jp">完成した楽曲を専門的な音響ツールで仕上げる。432Hzなど自然倍音への再チューニング。空間的な深みの強化。スペクトルの造形。音楽が、最も深い響きに到達する。</p>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">04</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag">Vapor-Signal</span>
-              <span class="tag">Image-Flow</span>
-            </div>
-            <h3 class="process__step-title">Derived Visual Elements</h3>
-            <p class="process__step-text">The same original image is now transformed visually. Mist textures, fluid distortions, atmospheric layers — derived elements that share the DNA of the source while expanding its visual vocabulary.</p>
-            <p class="process__step-text-jp">同じ元画像を、今度は視覚的に展開する。霧のテクスチャ、流体の歪み、大気的なレイヤー。元画像のDNAを保ちながら、視覚的語彙を拡張する派生素材を生成する。</p>
-          </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">05</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag">Image-Flow</span>
-            </div>
-            <h3 class="process__step-title">Timeline-Based Visual Composition</h3>
-            <p class="process__step-text">Audio and visual materials converge on a timeline. Images are sequenced, layered, and transitioned while listening to the music. Visual flow and sonic structure become one.</p>
-            <p class="process__step-text-jp">音と映像がタイムライン上で交差する。音楽を聴きながら、画像のシーケンス、レイヤー、トランジションを構築。視覚の流れと音の構造がひとつになる。</p>
-          </div>
-        </div>
-
-        <!-- Step 6 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">06</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag">SignalType</span>
-            </div>
-            <h3 class="process__step-title">Glitch Text Generation</h3>
-            <p class="process__step-text">Poetry enters the signal field. Text is not subtitles — it is a visual signal, glitched and synchronized with the sonic structure. Language becomes light, motion, interference.</p>
-            <p class="process__step-text-jp">詩がシグナルの場に入る。字幕ではない——テキストは視覚的信号として、グリッチし、音の構造と同期する。言語が光になり、動きになり、干渉になる。</p>
-          </div>
-        </div>
-
-        <!-- Step 7 -->
-        <div class="process__step" data-animate="fade-up">
-          <div class="process__step-number">07</div>
-          <div class="process__step-content">
-            <div class="process__step-tags">
-              <span class="tag tag--secondary">Video Editor</span>
-            </div>
-            <h3 class="process__step-title">Final Composition</h3>
-            <p class="process__step-text">All layers converge. Music. Visual composition. Mist effects. Glitch text. Through careful layering and timing, the work is assembled into its final audiovisual form.</p>
-            <p class="process__step-text-jp">すべてのレイヤーが収束する。音楽。映像構成。ミストエフェクト。グリッチテキスト。注意深い重ね合わせとタイミングの調整により、作品は最終的な視聴覚形式へと組み上がる。</p>
-          </div>
-        </div>
+      <div class="hero-stat">
+        <span class="num display">7</span>
+        <span class="label mono" data-lang="en">Stages</span>
+        <span class="label mono" data-lang="jp" lang-jp>工程</span>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION 4: TOOLKIT -->
-  <!-- ═══════════════════════════════════════ -->
-  <section class="toolkit" id="toolkit">
-    <div class="container">
-      <div class="section-header" data-animate="fade-up">
-        <h2 class="section-title">The Toolkit</h2>
-        <p class="section-subtitle">これがPoetic Signalを可能にする8つのツールです。</p>
-      </div>
+<section class="manifesto" id="manifesto">
+  <div class="manifesto-body reveal">
+    <span class="eyebrow" style="justify-content:center;" data-lang="en">What is Poetic Signal</span>
+    <span class="eyebrow" style="justify-content:center;" data-lang="jp" lang-jp>Poetic Signalとは</span>
 
-      <div class="toolkit__grid">
-        <!-- App 1: Luma2MIDI -->
-        <div class="app-card" data-animate="fade-up" data-app="luma2midi">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M24 8 L36 24 L24 40 L12 24 Z" stroke="#7c5cfc" stroke-width="1.5" fill="none" opacity="0.9"/><line x1="4" y1="20" x2="12" y2="24" stroke="#5ce0fc" stroke-width="1.2" opacity="0.6"/><line x1="36" y1="24" x2="44" y2="16" stroke="#7c5cfc" stroke-width="1.2" opacity="0.7"/><line x1="36" y1="24" x2="44" y2="24" stroke="#9b7dff" stroke-width="1.2" opacity="0.5"/><line x1="36" y1="24" x2="44" y2="32" stroke="#5ce0fc" stroke-width="1.2" opacity="0.7"/><circle cx="44" cy="16" r="2" fill="#7c5cfc" opacity="0.8"/><circle cx="44" cy="32" r="2" fill="#5ce0fc" opacity="0.8"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 1</div>
-          </div>
-          <h3 class="app-card__name">Luma2MIDI</h3>
-          <p class="app-card__tagline">Generative Video-to-MIDI Sequencer & Synthesizer</p>
-          <p class="app-card__desc">Turn light into music. Translates video luminance and color data into living MIDI sequences in real-time. Paired with a built-in FM Synthesizer, it turns any video into a generative instrument.</p>
-          <p class="app-card__desc-jp">光を音楽に変える。映像の輝度と色彩をリアルタイムで解析し、生きたMIDIシーケンスへ変換。内蔵FMシンセサイザーとの連動で、映像そのものが楽器になります。</p>
-          <div class="app-card__features">
-            <span>Real-time Translation</span>
-            <span>FM Synth Engine</span>
-            <span>MIDI Export</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://luma2midi.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/1d3620c7-1b21-45a8-a3a7-a5c89b03a1d0" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
+    <h2 data-lang="en">An abstract poetic form in which sound, image, and language operate as equal signals within one perceptual field.</h2>
+    <h2 data-lang="jp" lang-jp>音・映像・言語が、等価のシグナルとして共存する抽象的な詩的形式。</h2>
 
-        <!-- App 2: Harmonic-Reframe -->
-        <div class="app-card" data-animate="fade-up" data-app="harmonic-reframe">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#7c5cfc" stroke-width="1" opacity="0.3"/><circle cx="24" cy="24" r="12" stroke="#7c5cfc" stroke-width="1.2" opacity="0.5"/><circle cx="24" cy="24" r="6" stroke="#5ce0fc" stroke-width="1.5" opacity="0.7"/><line x1="24" y1="30" x2="24" y2="40" stroke="#7c5cfc" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14 L21 26 Q21 28 24 28 Q27 28 27 26 L27 14" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M17 20 Q19 18 17 16" stroke="#5ce0fc" stroke-width="1" opacity="0.5" fill="none" stroke-linecap="round"/><path d="M31 20 Q29 18 31 16" stroke="#5ce0fc" stroke-width="1" opacity="0.5" fill="none" stroke-linecap="round"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 3</div>
-          </div>
-          <h3 class="app-card__name">Harmonic-Reframe</h3>
-          <p class="app-card__tagline">Solfeggio & Harmonic Spatial Audio Processor</p>
-          <p class="app-card__desc">Reframe your frequency. Retune standard A=440Hz music to natural healing frequencies — 432Hz, 528Hz, and the Solfeggio spectrum. Expand stereo width through mid/side processing.</p>
-          <p class="app-card__desc-jp">周波数を再構築する。A=440Hzの標準音楽を432Hzや528Hzへリアルタイムで再チューニング。Mid/Side処理によるステレオ空間の拡張で、広大な音場を実現。</p>
-          <div class="app-card__features">
-            <span>432Hz / 528Hz Retune</span>
-            <span>Stereo Expansion</span>
-            <span>Waveform Visualizer</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://harmonic-reframe.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/141461bb-e524-451f-b0cb-d2e5716f1e2e" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
+    <div class="negation mono" data-lang="en">Not music. Not video. Not text.<br>A media form built from interacting signals.</div>
+    <div class="negation mono" data-lang="jp" lang-jp>音楽でも、映像でも、テキストでもない。<br>知覚的信号の相互作用から生まれるメディア形式。</div>
 
-        <!-- App 3: Water-Brain-Modulator -->
-        <div class="app-card" data-animate="fade-up" data-app="water-brain">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M24 6 Q24 6 32 20 Q38 30 32 36 Q28 42 24 42 Q20 42 16 36 Q10 30 16 20 Q24 6 24 6Z" stroke="#7c5cfc" stroke-width="1.5" fill="none"/><path d="M16 26 L19 26 L21 22 L23 30 L25 20 L27 28 L29 24 L32 26" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 38 Q24 36 28 38" stroke="#7c5cfc" stroke-width="1" opacity="0.4" fill="none"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 3</div>
-          </div>
-          <h3 class="app-card__name">Water-Brain-Modulator</h3>
-          <p class="app-card__tagline">Binaural & 1/f Organic Audio Entrainment</p>
-          <p class="app-card__desc">Entrain the mind through sound. Inject organic 1/f pink noise modulation — volume, panning, and filters breathe and drift naturally. Generate true binaural beats targeting brainwave states.</p>
-          <p class="app-card__desc-jp">音で脳を同調させる。1/fゆらぎによる有機的モジュレーションで自然な呼吸と漂いを生み出し、真のバイノーラルビートを生成します。</p>
-          <div class="app-card__features">
-            <span>1/f Drift Modulator</span>
-            <span>Binaural Beats</span>
-            <span>WAV Export</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://water-brain-modulator.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/09f067c8-e047-4aa5-ae14-7e57eee47375" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
+    <div class="manifesto-jp" data-lang="en">A single visual source generates multiple forms of expression.</div>
+    <div class="manifesto-jp body-jp" data-lang="jp" lang-jp>ひとつの視覚的源泉が、複数の表現形式を生み出す。</div>
+  </div>
+</section>
 
-        <!-- App 4: SpectraLine -->
-        <div class="app-card" data-animate="fade-up" data-app="spectraline">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><line x1="10" y1="38" x2="10" y2="28" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.5"/><line x1="16" y1="38" x2="16" y2="22" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="22" y1="38" x2="22" y2="14" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="28" y1="38" x2="28" y2="18" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.7"/><line x1="34" y1="38" x2="34" y2="24" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="40" y1="38" x2="40" y2="30" stroke="#7c5cfc" stroke-width="2" stroke-linecap="round" opacity="0.4"/><path d="M8 30 Q14 20 20 12 Q26 18 32 16 Q38 22 42 28" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="42" cy="28" r="2" fill="#5ce0fc" opacity="0.6"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 3</div>
-          </div>
-          <h3 class="app-card__name">SpectraLine</h3>
-          <p class="app-card__tagline">Generative Spectral Line & Data Art System</p>
-          <p class="app-card__desc">Transform images into living data art. Generate high-density line art, oscilloscope waveforms, and glowing neon prism strokes based on visual gradients and luminance.</p>
-          <p class="app-card__desc-jp">画像を生ききたデータアートへ変換する。輝度とグラデーションを解析し、高密度のラインアート、オシロスコープ波形、発光するネオンプリズムを描画します。</p>
-          <div class="app-card__features">
-            <span>Oscilloscope Waves</span>
-            <span>Neon Prism Formats</span>
-            <span>High-Res Export</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://spectra-line.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/fe5170ba-6637-4031-91b3-b230dbbcda13" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
+<section id="process">
+  <div class="process-head reveal">
+    <span class="eyebrow" data-lang="en">The process</span>
+    <span class="eyebrow" data-lang="jp" lang-jp>制作工程</span>
+    <h2 class="display" data-lang="en">One image becomes one finished work.</h2>
+    <h2 class="display" data-lang="jp" lang-jp>ひとつの画像から、ひとつの作品へ。</h2>
+  </div>
 
-        <!-- App 5: Vapor-Signal -->
-        <div class="app-card" data-animate="fade-up" data-app="vapor-signal">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M14 40 Q14 34 18 30 Q14 26 18 22 Q14 18 18 14" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/><path d="M24 42 Q24 36 28 32 Q24 28 28 24 Q24 20 28 16 Q24 12 28 8" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.9"/><path d="M34 40 Q34 34 30 30 Q34 26 30 22 Q34 18 30 14" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/><circle cx="20" cy="18" r="1" fill="#5ce0fc" opacity="0.4"/><circle cx="30" cy="12" r="1.5" fill="#7c5cfc" opacity="0.3"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 4</div>
-          </div>
-          <h3 class="app-card__name">Vapor-Signal</h3>
-          <p class="app-card__tagline">Ambient & Atmospheric Mist Engine</p>
-          <p class="app-card__desc">Inject atmosphere. Organic mist, VHS artifacts, light-leaks, atmospheric noise — controlled "vapor" signals that transform clean images into dreamlike visual landscapes.</p>
-          <p class="app-card__desc-jp">空気を注入する。霧の漂い、VHSノイズ、光漏れ——制御された蒸気のシグナルが、クリーンな画像を夢のようなビジュアルへ変える。</p>
-          <div class="app-card__features">
-            <span>WebGL Shaders</span>
-            <span>Analog Degradation</span>
-            <span>Real-time Render</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://vapor-signal.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/730d9777-f91b-4680-85c7-615f38868811" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
-
-        <!-- App 6: Image-Flow -->
-        <div class="app-card" data-animate="fade-up" data-app="image-flow">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M10 10 L38 10 Q36 18 38 24 Q40 30 38 38 L10 38 Q12 30 10 24 Q8 18 10 10Z" stroke="#7c5cfc" stroke-width="1.2" fill="none" opacity="0.4"/><path d="M12 18 Q20 14 28 20 Q36 26 38 18" stroke="#7c5cfc" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M10 26 Q18 22 26 28 Q34 34 40 26" stroke="#5ce0fc" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M12 34 Q20 30 28 34 Q36 38 38 34" stroke="#7c5cfc" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 4 · 5</div>
-          </div>
-          <h3 class="app-card__name">Image-Flow</h3>
-          <p class="app-card__tagline">Fluid Dynamics Image Distortion</p>
-          <p class="app-card__desc">Make pixels liquid. Fluid dynamic simulations let you melt, drip, swirl, and warp images interactively. Bridge the gap between still photography and mesmerizing digital flow art.</p>
-          <p class="app-card__desc-jp">ピクセルを液体にする。流体力学シミュレーションにより画像を溶かし、滴らせ、渦を巻かせる。静止画から催眠的なデジタル・フローアートを創出。</p>
-          <div class="app-card__features">
-            <span>Fluid Simulation</span>
-            <span>Interactive Warping</span>
-            <span>Cinematic Export</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://image-flow-taupe.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/b5df17fd-694a-4233-a97b-b8b34c413082" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
-
-        <!-- App 7: SignalType -->
-        <div class="app-card" data-animate="fade-up" data-app="signaltype">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none"><path d="M16 38 L24 10 L32 38" stroke="#7c5cfc" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="19" y1="28" x2="29" y2="28" stroke="#7c5cfc" stroke-width="1.5" stroke-linecap="round"/><line x1="14" y1="20" x2="36" y2="20" stroke="#5ce0fc" stroke-width="0.8" opacity="0.5"/><rect x="18" y="19" width="8" height="3" fill="#5ce0fc" opacity="0.12"/><path d="M28 22 L30 16" stroke="#5ce0fc" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/><line x1="8" y1="32" x2="14" y2="32" stroke="#7c5cfc" stroke-width="1" opacity="0.3"/><line x1="34" y1="14" x2="42" y2="14" stroke="#5ce0fc" stroke-width="1" opacity="0.3"/><line x1="36" y1="36" x2="36" y2="42" stroke="#5ce0fc" stroke-width="1.5" opacity="0.7" stroke-linecap="round"/></svg>
-            </div>
-            <div class="app-card__step-badge">Step 6</div>
-          </div>
-          <h3 class="app-card__name">SignalType</h3>
-          <p class="app-card__tagline">Kinetic Typography & Typographic Interference</p>
-          <p class="app-card__desc">Text as signal. Words become dynamic 3D elements that react to audio inputs and glitch algorithms. Generate animated titles, corrupted letterforms, and abstract typographic art.</p>
-          <p class="app-card__desc-jp">テキストを信号にする。文字を3Dキネティックオブジェクトに変換し、音やグリッチに反応。アニメーション・タイトル、破壊的文字造形をブラウザ上で生成。</p>
-          <div class="app-card__features">
-            <span>3D Text Rendering</span>
-            <span>Glitch Injection</span>
-            <span>Audio-Reactive</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://signal-type.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/bc2780ac-b475-4ae2-ab22-3e69daa89cfd" class="app-card__btn app-card__btn--buy lemonsqueezy-button">Buy License</a>
-          </div>
-        </div>
-        <!-- App 8: Cosmic-Swarm -->
-        <div class="app-card" data-animate="fade-up" data-app="cosmic-swarm">
-          <div class="app-card__glow"></div>
-          <div class="app-card__header">
-            <div class="app-card__icon">
-              <svg viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="12" fill="#7c5cfc" opacity="0.4"/>
-                <circle cx="20" cy="20" r="8" fill="#5ce0fc" opacity="0.6"/>
-                <circle cx="28" cy="28" r="6" fill="#00ff88" opacity="0.8"/>
-              </svg>
-            </div>
-            <div class="app-card__step-badge">Step 4 · 5</div>
-          </div>
-          <h3 class="app-card__name">Cosmic-Swarm</h3>
-          <p class="app-card__tagline">Macroscopic & Microscopic Audio-Reactive Entity Engine</p>
-          <p class="app-card__desc">Simulate living organic matter, scaling from cellular division to stellar nebulae. Driven by audio frequency separation, bass kicks induce massive liquid expansion and droplet detachment.</p>
-          <p class="app-card__desc-jp">細胞分裂から宇宙の星雲に至るまで、生命体のような有機的物質の振る舞いをシミュレートするWebGLビジュアライザ・エンジンです。音域分離技術により流体が大きく膨張・分離します。</p>
-          <div class="app-card__features">
-            <span>Audio Reactive</span>
-            <span>Metaball Fusion</span>
-            <span>Fluid Droplets</span>
-          </div>
-          <div class="app-card__actions">
-            <a href="https://cosmic-swarm.vercel.app/" target="_blank" class="app-card__btn">Launch App →</a>
-            <a href="https://cosmic-swarm.vercel.app/" target="_blank" class="app-card__btn app-card__btn--buy lemonsqueezy-button" style="pointer-events: none; opacity: 0.5;">Coming Soon</a>
-          </div>
-        </div>
+  <div class="timeline">
+    <div class="step reveal">
+      <span class="step-num mono">01</span>
+      <div>
+        <div class="step-tags"><span class="step-tag mono">Luma2MIDI</span></div>
+        <h3 class="display" data-lang="en">Visual Spectrum Analysis</h3>
+        <h3 class="display" data-lang="jp" lang-jp>視覚スペクトル解析</h3>
+        <p data-lang="en">The process begins with a single image. Its color, gradients, and luminance are analyzed and translated into MIDI — the language of music. The image becomes the origin of sound.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>すべては一枚の画像から始まる。色彩、グラデーション、輝度を解析し、音楽の言語であるMIDIデータへ変換する。画像が、音の出発点になる。</p>
       </div>
     </div>
-  </section>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION 5: FAQ -->
-  <!-- ═══════════════════════════════════════ -->
-  <section class="faq" id="faq">
-    <div class="container">
-      <div class="section-header" data-animate="fade-up">
-        <h2 class="section-title">FAQ</h2>
-        <p class="section-subtitle">よくあるご質問</p>
-      </div>
-
-      <div class="faq__grid">
-        <!-- Q1: Browser -->
-        <div class="faq__item" data-animate="fade-up">
-          <h3 class="faq__question">What are the system requirements?</h3>
-          <div class="faq__answer">
-            <p>Poetic Signal apps are high-performance web applications. We recommend using the latest version of Chrome, Edge, or Safari on a desktop or laptop for the best experience.</p>
-            <span class="faq__answer-jp">推奨環境は？：最新バージョンのChrome、Edge、Safariでの動作を推奨しています。デスクトップまたはノートPCでの使用を推奨します。</span>
-          </div>
-        </div>
-
-        <!-- Q2: Commercial Use -->
-        <div class="faq__item" data-animate="fade-up" data-delay="100">
-          <h3 class="faq__question">Can I use the output for commercial projects?</h3>
-          <div class="faq__answer">
-            <p>Yes. Any media you generate and export using the toolkit (WAV, MP4, image) is yours to use in any personal or commercial project with no attribution required.</p>
-            <span class="faq__answer-jp">商用利用は可能ですか？：はい。エクスポートした音声や映像は、商用・非商用を問わず自由にお使いいただけます。クレジット表記も不要です。</span>
-          </div>
-        </div>
-
-        <!-- Q3: Payments -->
-        <div class="faq__item" data-animate="fade-up" data-delay="200">
-          <h3 class="faq__question">Is it a subscription or one-time payment?</h3>
-          <div class="faq__answer">
-            <p>All Poetic Signal products are one-time payments. Once you purchase a license, you have lifetime access with no recurring fees.</p>
-            <span class="faq__answer-jp">サブスクリプションですか？：いいえ。すべてのツールは買い切り形式です。一度の支払いで、永久的にご利用いただけます。</span>
-          </div>
-        </div>
-
-        <!-- Q4: Installation -->
-        <div class="faq__item" data-animate="fade-up" data-delay="300">
-          <h3 class="faq__question">Do I need to install anything?</h3>
-          <div class="faq__answer">
-            <p>No. All tools run directly in your web browser using modern WebGL and WebAudio technology. You can start creating immediately after checkout.</p>
-            <span class="faq__answer-jp">インストールは必要ですか？：不要です。すべてのツールはWebGLとWebAudioを活用し、ブラウザ上で直接動作します。</span>
-          </div>
-        </div>
+    <div class="step reveal">
+      <span class="step-num mono">02</span>
+      <div>
+        <div class="step-tags"><span class="step-tag mono">DAW</span></div>
+        <h3 class="display" data-lang="en">Musical Construction</h3>
+        <h3 class="display" data-lang="jp" lang-jp>楽曲の構築</h3>
+        <p data-lang="en">MIDI signals are imported into a DAW. The raw data becomes structural material — instruments, rhythms, harmonies are shaped through intuitive artistic decisions.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>生成されたMIDIをDAWに取り込み、楽器、リズム、ハーモニーを構築する。データは素材に過ぎない。作家の直感が、楽曲の性格を決定する。</p>
       </div>
     </div>
-  </section>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SECTION 6: CTA / PRICING -->
-  <!-- ═══════════════════════════════════════ -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <div class="section-header" data-animate="fade-up">
-        <h2 class="section-title">Start creating.</h2>
-        <p class="section-subtitle">あなたのPoetic Signalを、始めよう。</p>
-      </div>
-
-      <p class="pricing__lead" data-animate="fade-up">
-        Each tool is available individually, or unlock the complete toolkit as a bundle.<br />
-        All apps run in your browser. No installation required.
-      </p>
-      <p class="pricing__lead pricing__lead--jp" data-animate="fade-up">
-        各アプリは個別に入手できます。バンドルですべてを一括で手に入れることも可能です。<br />
-        すべてブラウザ上で動作。インストール不要。
-      </p>
-
-      <div class="pricing__cards" data-animate="fade-up">
-        <!-- Individual -->
-        <div class="pricing__card">
-          <div class="pricing__card-label">Individual App</div>
-          <div class="pricing__card-price">
-            <span class="pricing__card-currency">$</span>
-            <span class="pricing__card-amount">15</span>
-            <span class="pricing__card-period">/ app</span>
-          </div>
-          <p class="pricing__card-desc">Choose one tool to start with. Perfect for exploring a single creative signal.</p>
-          <ul class="pricing__card-list">
-            <li>Single app access</li>
-            <li>Browser-based</li>
-            <li>Full export capabilities</li>
-          </ul>
-          <a href="#toolkit" class="pricing__card-btn pricing__card-btn--secondary">Choose App</a>
+    <div class="step reveal">
+      <span class="step-num mono">03</span>
+      <div>
+        <div class="step-tags">
+          <span class="step-tag mono">Harmonic-Reframe</span>
+          <span class="step-tag mono">Water-Brain-Modulator</span>
+          <span class="step-tag mono">SpectraLine</span>
         </div>
-
-        <!-- Bundle -->
-        <div class="pricing__card pricing__card--featured">
-          <div class="pricing__card-badge">Recommended</div>
-          <div class="pricing__card-label">Complete Toolkit</div>
-          <div class="pricing__card-price">
-            <span class="pricing__card-currency">$</span>
-            <span class="pricing__card-amount">69</span>
-          </div>
-          <p class="pricing__card-original"><s>$105</s> — Save over 50%</p>
-          <p class="pricing__card-desc">All 8 apps. Full creative pipeline. From image to final audiovisual composition.</p>
-          <p class="pricing__card-desc-jp">ひとつの画像から、ひとつの作品へ。すべてのツールで完全なワークフローを。</p>
-          <ul class="pricing__card-list">
-            <li>All 8 applications</li>
-            <li>Complete signal pipeline</li>
-            <li>Browser-based</li>
-            <li>Full export capabilities</li>
-          </ul>
-          <a href="https://poeticsignal.lemonsqueezy.com/checkout/buy/47bdb8ce-4ae3-4bd2-b486-6656fa184e12" class="pricing__card-btn lemonsqueezy-button">Get the Toolkit →</a>
-        </div>
+        <h3 class="display" data-lang="en">Sonic Optimization</h3>
+        <h3 class="display" data-lang="jp" lang-jp>音響の最適化</h3>
+        <p data-lang="en">The composition is refined through specialized sonic tools. Frequencies are retuned to natural harmonics, spatial depth is enhanced, spectral balance is sculpted.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>完成した楽曲を専門的な音響ツールで仕上げる。432Hzなど自然倍音への再チューニング、空間的な深みの強化、スペクトルの造形を行う。</p>
       </div>
     </div>
-  </section>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- FOOTER -->
-  <!-- ═══════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__grid">
-        <div class="footer__info">
-          <p class="footer__brand">POETIC SIGNAL</p>
-          <div class="footer__contact">
-            Support: <a href="mailto:design.seez@gmail.com">design.seez@gmail.com</a>
-          </div>
-        </div>
-        <div class="footer__links-grid">
-          <div class="footer__col">
-            <h4 class="footer__col-title">Navigation</h4>
-            <ul class="footer__link-list">
-              <li><a href="#manifesto">Manifesto</a></li>
-              <li><a href="#process">Process</a></li>
-              <li><a href="#toolkit">Toolkit</a></li>
-              <li><a href="#pricing">Pricing</a></li>
-            </ul>
-          </div>
-          <div class="footer__col">
-            <h4 class="footer__col-title">Legal</h4>
-            <ul class="footer__link-list">
-              <li><a href="terms.html">Terms of Service</a></li>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="refund.html">Refund Policy</a></li>
-            </ul>
-          </div>
-          <div class="footer__col">
-            <h4 class="footer__col-title">Connect</h4>
-            <ul class="footer__link-list">
-              <li><a href="#" style="opacity: 0.3; pointer-events: none;">X / Twitter</a></li>
-              <li><a href="#" style="opacity: 0.3; pointer-events: none;">Instagram</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <p class="footer__copy">&copy; 2026 Poetic Signal. Built for the future of digital expression.</p>
+    <div class="step reveal">
+      <span class="step-num mono">04</span>
+      <div>
+        <div class="step-tags"><span class="step-tag mono">Vapor-Signal</span><span class="step-tag mono">Image-Flow</span></div>
+        <h3 class="display" data-lang="en">Derived Visual Elements</h3>
+        <h3 class="display" data-lang="jp" lang-jp>派生ビジュアルの生成</h3>
+        <p data-lang="en">The same original image is now transformed visually. Mist textures, fluid distortions, atmospheric layers — derived elements that share the DNA of the source.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>同じ元画像を、今度は視覚的に展開する。霧のテクスチャ、流体の歪み、大気的なレイヤー。元画像のDNAを保ちながら語彙を拡張する。</p>
       </div>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
+    <div class="step reveal">
+      <span class="step-num mono">05</span>
+      <div>
+        <div class="step-tags"><span class="step-tag mono">Image-Flow</span></div>
+        <h3 class="display" data-lang="en">Timeline-Based Visual Composition</h3>
+        <h3 class="display" data-lang="jp" lang-jp>タイムライン構成</h3>
+        <p data-lang="en">Audio and visual materials converge on a timeline. Images are sequenced, layered, and transitioned while listening to the music.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>音と映像がタイムライン上で交差する。音楽を聴きながら、画像のシーケンス、レイヤー、トランジションを構築する。</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <span class="step-num mono">06</span>
+      <div>
+        <div class="step-tags"><span class="step-tag mono">SignalType</span></div>
+        <h3 class="display" data-lang="en">Glitch Text Generation</h3>
+        <h3 class="display" data-lang="jp" lang-jp>グリッチテキスト生成</h3>
+        <p data-lang="en">Poetry enters the signal field. Text is not subtitles — it is a visual signal, glitched and synchronized with the sonic structure.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>詩がシグナルの場に入る。字幕ではない。テキストは視覚的信号として、グリッチし、音の構造と同期する。</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <span class="step-num mono">07</span>
+      <div>
+        <div class="step-tags"><span class="step-tag mono">Video Editor</span></div>
+        <h3 class="display" data-lang="en">Final Composition</h3>
+        <h3 class="display" data-lang="jp" lang-jp>最終構成</h3>
+        <p data-lang="en">All layers converge. Music, visual composition, mist effects, glitch text. Through careful layering and timing, the work reaches its final audiovisual form.</p>
+        <p data-lang="jp" class="body-jp" lang-jp>すべてのレイヤーが収束する。音楽、映像構成、ミストエフェクト、グリッチテキスト。注意深い重ね合わせにより、作品が最終形式へと組み上がる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="thesis reveal">
+  <blockquote class="display" data-lang="en">A single visual source generates multiple forms of expression.</blockquote>
+  <blockquote class="display" data-lang="jp" lang-jp>ひとつの視覚的源泉が、複数の表現形式を生み出す。</blockquote>
+  <div class="jp-line" lang-jp>削ぎ落とすほど核心は現れる</div>
+</section>
+
+<section id="toolkit">
+  <div class="tools-head reveal">
+    <span class="eyebrow" data-lang="en">The toolkit</span>
+    <span class="eyebrow" data-lang="jp" lang-jp>ツール一覧</span>
+    <h2 class="display" data-lang="en">Eight tools. One continuous pipeline.</h2>
+    <h2 class="display" data-lang="jp" lang-jp>8つのツール。ひとつの制作工程。</h2>
+  </div>
+
+  <div class="tool-list reveal">
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 24 L20 16 L26 24 L20 32 Z"/>
+          <circle cx="20" cy="24" r="1.6" fill="#1A1D1B" stroke="none"/>
+          <path d="M26 24 L34 24"/>
+          <circle cx="36" cy="24" r="2.4"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 1</span>
+        <div class="tool-name display">Luma2MIDI</div>
+        <div class="tool-tagline">Generative Video-to-MIDI Sequencer &amp; Synthesizer</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Turn light into music. Translates video luminance and color data into living MIDI sequences in real-time, paired with a built-in FM synthesizer.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>光を音楽に変える。映像の輝度と色彩をリアルタイムで解析し、生きたMIDIシーケンスへ変換。</p>
+        <div class="tool-io mono">VIDEO <span class="arrow">→</span> MIDI</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://luma2midi.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/1d3620c7-1b21-45a8-a3a7-a5c89b03a1d0" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/1d3620c7-1b21-45a8-a3a7-a5c89b03a1d0" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="24" cy="24" r="13"/>
+          <circle cx="24" cy="24" r="7.5"/>
+          <path d="M24 14 L24 22"/>
+          <path d="M19 17.5 A 9 9 0 1 0 29 17.5" stroke-width="1.4"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 3</span>
+        <div class="tool-name display">Harmonic-Reframe</div>
+        <div class="tool-tagline">Solfeggio &amp; Harmonic Spatial Audio Processor</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Reframe your frequency. Retune standard A=440Hz music to 432Hz, 528Hz, and the Solfeggio spectrum, with mid/side stereo expansion.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>周波数を再構築する。A=440Hzの標準音楽を432Hz・528Hzへ再チューニング。</p>
+        <div class="tool-io mono">AUDIO <span class="arrow">→</span> AUDIO</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://harmonic-reframe.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/141461bb-e524-451f-b0cb-d2e5716f1e2e" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/141461bb-e524-451f-b0cb-d2e5716f1e2e" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 11 C 17 20, 13 26, 13 31 A 11 11 0 0 0 35 31 C 35 26, 31 20, 24 11 Z"/>
+          <path d="M17 28 L20 28 L22 23 L25 33 L27 28 L31 28" stroke-width="1.3"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 3</span>
+        <div class="tool-name display">Water-Brain-Modulator</div>
+        <div class="tool-tagline">Binaural &amp; 1/f Organic Audio Entrainment</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Entrain the mind through sound. Organic 1/f pink-noise modulation and true binaural beats targeting brainwave states.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>音で脳を同調させる。1/fゆらぎによる有機的モジュレーションと、真のバイノーラルビートを生成。</p>
+        <div class="tool-io mono">AUDIO <span class="arrow">→</span> AUDIO</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://water-brain-modulator.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/09f067c8-e047-4aa5-ae14-7e57eee47375" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/09f067c8-e047-4aa5-ae14-7e57eee47375" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 32 L14 20"/>
+          <path d="M19.5 32 L19.5 13"/>
+          <path d="M25 32 L25 22"/>
+          <path d="M30.5 32 L30.5 16"/>
+          <path d="M36 32 L36 25"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 3</span>
+        <div class="tool-name display">SpectraLine</div>
+        <div class="tool-tagline">Generative Spectral Line &amp; Data Art System</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Transform images into living data art — high-density line art, oscilloscope waveforms, glowing neon prism strokes.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>画像を生きたデータアートへ変換する。高密度のラインアート、オシロスコープ波形を描画。</p>
+        <div class="tool-io mono">IMAGE <span class="arrow">→</span> IMAGE</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://spectra-line.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/fe5170ba-6637-4031-91b3-b230dbbcda13" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/fe5170ba-6637-4031-91b3-b230dbbcda13" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 13 C 19 17, 11 21, 15 25 C 19 29, 11 33, 15 36"/>
+          <path d="M24 11 C 28 15, 20 19, 24 23 C 28 27, 20 31, 24 35"/>
+          <path d="M33 13 C 37 17, 29 21, 33 25 C 37 29, 29 33, 33 36"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 4</span>
+        <div class="tool-name display">Vapor-Signal</div>
+        <div class="tool-tagline">Ambient &amp; Atmospheric Mist Engine</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Inject atmosphere. Organic mist, VHS artifacts, and light-leaks transform clean images into dreamlike visual landscapes.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>空気を注入する。霧の漂い、VHSノイズ、光漏れが、クリーンな画像を夢のようなビジュアルへ変える。</p>
+        <div class="tool-io mono">IMAGE <span class="arrow">→</span> IMAGE</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://vapor-signal.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/730d9777-f91b-4680-85c7-615f38868811" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/730d9777-f91b-4680-85c7-615f38868811" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18 C 13.5 12, 18 24, 22.5 18 C 27 12, 31.5 24, 36 18 C 38 15.5, 39 15.5, 39 15.5"/>
+          <path d="M9 30 C 13.5 24, 18 36, 22.5 30 C 27 24, 31.5 36, 36 30 C 38 27.5, 39 27.5, 39 27.5"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 4–5</span>
+        <div class="tool-name display">Image-Flow</div>
+        <div class="tool-tagline">Fluid Dynamics Image Distortion</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Make pixels liquid. Fluid dynamic simulations melt, drip, swirl, and warp images interactively.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>ピクセルを液体にする。流体力学シミュレーションにより画像を溶かし、渦を巻かせる。</p>
+        <div class="tool-io mono">IMAGE <span class="arrow">→</span> VIDEO</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://image-flow-taupe.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/b5df17fd-694a-4233-a97b-b8b34c413082" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/b5df17fd-694a-4233-a97b-b8b34c413082" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" fill="none" stroke="#1A1D1B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 33 L24 15 L30 33"/>
+          <path d="M20.5 26 L27.5 26"/>
+          <path d="M21 15 L27 15" stroke-width="1.3"/>
+          <path d="M16 33 L19.5 33" stroke-width="1.3"/>
+          <path d="M28.5 33 L32 33" stroke-width="1.3"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 6</span>
+        <div class="tool-name display">SignalType</div>
+        <div class="tool-tagline">Kinetic Typography &amp; Typographic Interference</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Text as signal. Words become dynamic 3D elements that react to audio inputs and glitch algorithms.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>テキストを信号にする。文字を3Dキネティックオブジェクトに変換し、音やグリッチに反応させる。</p>
+        <div class="tool-io mono">TEXT <span class="arrow">→</span> VIDEO</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://signal-type.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/bc2780ac-b475-4ae2-ab22-3e69daa89cfd" target="_blank" rel="noopener" data-lang="en">$15 — Buy</a>
+        <a class="tool-buy" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/bc2780ac-b475-4ae2-ab22-3e69daa89cfd" target="_blank" rel="noopener" data-lang="jp" lang-jp>$15 — 購入</a>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-icon">
+        <svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="20" cy="20" r="9" fill="none" stroke="#9E3D3F" stroke-width="1.4"/>
+          <circle cx="29" cy="20" r="9" fill="none" stroke="#6E7D6F" stroke-width="1.4"/>
+          <circle cx="24.5" cy="27.5" r="9" fill="none" stroke="#1A1D1B" stroke-width="1.4"/>
+        </svg>
+      </div>
+      <div>
+        <span class="tool-id mono">STEP 4–5</span>
+        <div class="tool-name display">Cosmic-Swarm</div>
+        <div class="tool-tagline">Audio-Reactive Entity Engine</div>
+      </div>
+      <div>
+        <p class="tool-desc" data-lang="en">Simulate living organic matter, from cellular division to stellar nebulae, driven by audio frequency separation.</p>
+        <p class="tool-desc body-jp" data-lang="jp" lang-jp>細胞分裂から星雲に至るまで、生命体のような有機的物質をシミュレートする。</p>
+        <div class="tool-io mono">AUDIO <span class="arrow">→</span> VIDEO</div>
+      </div>
+      <div class="tool-actions">
+        <a class="tool-link" href="https://cosmic-swarm.vercel.app/" target="_blank" rel="noopener">Launch app</a>
+        <span class="tool-buy soon" data-lang="en">Coming soon</span>
+        <span class="tool-buy soon" data-lang="jp" lang-jp>近日公開</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="pricing-head reveal">
+    <span class="eyebrow" style="justify-content:center;" data-lang="en">Start creating</span>
+    <span class="eyebrow" style="justify-content:center;" data-lang="jp" lang-jp>はじめる</span>
+    <h2 class="display" data-lang="en">Each tool stands alone. Together, they're a pipeline.</h2>
+    <h2 class="display" data-lang="jp" lang-jp>各ツールは単体でも、つなげれば工程になる。</h2>
+    <p data-lang="en">Every app runs in your browser. No installation required.</p>
+    <p data-lang="jp" class="body-jp" lang-jp>すべてブラウザ上で動作。インストール不要。</p>
+  </div>
+
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-name mono" data-lang="en">Individual app</div>
+      <div class="price-name mono" data-lang="jp" lang-jp>個別アプリ</div>
+      <div class="price-num display">$15<span style="font-size:1rem; font-family:'JetBrains Mono',monospace; color:var(--moss);" data-lang="en"> / app</span><span style="font-size:1rem; font-family:'JetBrains Mono',monospace; color:var(--moss);" data-lang="jp" lang-jp> / 本</span></div>
+      <p class="price-desc" data-lang="en">Choose one tool to start with. Perfect for exploring a single creative signal.</p>
+      <p class="price-desc body-jp" data-lang="jp" lang-jp>まずは1つのツールから。ひとつのシグナルを試してみたい方に。</p>
+      <ul class="price-features">
+        <li data-lang="en">Single app access</li>
+        <li data-lang="jp" lang-jp>1アプリへのアクセス</li>
+        <li data-lang="en">Browser-based</li>
+        <li data-lang="jp" lang-jp>ブラウザで完結</li>
+        <li data-lang="en">Full export capabilities</li>
+        <li data-lang="jp" lang-jp>フルエクスポート対応</li>
+      </ul>
+      <a class="price-cta" href="#toolkit">
+        <span data-lang="en">Choose an app</span>
+        <span data-lang="jp" lang-jp>アプリを選ぶ</span>
+      </a>
+    </div>
+
+    <div class="price-card featured">
+      <span class="price-badge mono" data-lang="en">Recommended</span>
+      <span class="price-badge mono" data-lang="jp" lang-jp>おすすめ</span>
+      <div class="price-name mono" data-lang="en">Complete toolkit</div>
+      <div class="price-name mono" data-lang="jp" lang-jp>コンプリート・ツールキット</div>
+      <div class="price-num display">$69</div>
+      <div class="price-was mono"><del>$105</del> <span data-lang="en">— save over 50%</span><span data-lang="jp" lang-jp>— 50%以上お得</span></div>
+      <p class="price-desc" data-lang="en">All 8 apps. The full creative pipeline, from a single image to a finished audiovisual work.</p>
+      <p class="price-desc body-jp" data-lang="jp" lang-jp>8つのツールすべて。ひとつの画像から完成作品までの全工程を。</p>
+      <ul class="price-features">
+        <li data-lang="en">All 8 applications</li>
+        <li data-lang="jp" lang-jp>8アプリすべて</li>
+        <li data-lang="en">Complete signal pipeline</li>
+        <li data-lang="jp" lang-jp>完全な制作パイプライン</li>
+        <li data-lang="en">Browser-based</li>
+        <li data-lang="jp" lang-jp>ブラウザで完結</li>
+        <li data-lang="en">Full export capabilities</li>
+        <li data-lang="jp" lang-jp>フルエクスポート対応</li>
+      </ul>
+      <a class="price-cta solid" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/47bdb8ce-4ae3-4bd2-b486-6656fa184e12" target="_blank" rel="noopener">
+        <span data-lang="en">Get the toolkit →</span>
+        <span data-lang="jp" lang-jp>ツールキットを購入 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="faq-head reveal">
+    <span class="eyebrow" data-lang="en">FAQ</span>
+    <span class="eyebrow" data-lang="jp" lang-jp>よくあるご質問</span>
+    <h2 class="display" data-lang="en">Questions, answered.</h2>
+    <h2 class="display" data-lang="jp" lang-jp>よくあるご質問</h2>
+  </div>
+
+  <div class="reveal">
+    <div class="faq-item">
+      <h3 class="display" data-lang="en">What are the system requirements?</h3>
+      <h3 class="display" data-lang="jp" lang-jp>推奨環境は？</h3>
+      <p data-lang="en">Poetic Signal apps are high-performance web applications. We recommend the latest version of Chrome, Edge, or Safari on a desktop or laptop.</p>
+      <p data-lang="jp" class="body-jp" lang-jp>最新バージョンのChrome、Edge、Safariでの動作を推奨しています。デスクトップまたはノートPCでの使用を推奨します。</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="display" data-lang="en">Can I use the output for commercial projects?</h3>
+      <h3 class="display" data-lang="jp" lang-jp>商用利用は可能ですか？</h3>
+      <p data-lang="en">Yes. Any media you generate and export (WAV, MP4, image) is yours to use in any personal or commercial project, with no attribution required.</p>
+      <p data-lang="jp" class="body-jp" lang-jp>はい。エクスポートした音声や映像は、商用・非商用を問わず自由にお使いいただけます。クレジット表記も不要です。</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="display" data-lang="en">Is it a subscription or one-time payment?</h3>
+      <h3 class="display" data-lang="jp" lang-jp>サブスクリプションですか？</h3>
+      <p data-lang="en">All Poetic Signal products are one-time payments. Once purchased, you have lifetime access with no recurring fees.</p>
+      <p data-lang="jp" class="body-jp" lang-jp>いいえ。すべてのツールは買い切り形式です。一度の支払いで、永久的にご利用いただけます。</p>
+    </div>
+    <div class="faq-item">
+      <h3 class="display" data-lang="en">Do I need to install anything?</h3>
+      <h3 class="display" data-lang="jp" lang-jp>インストールは必要ですか？</h3>
+      <p data-lang="en">No. All tools run directly in your browser using WebGL and WebAudio. You can start creating immediately after checkout.</p>
+      <p data-lang="jp" class="body-jp" lang-jp>不要です。すべてのツールはWebGLとWebAudioを活用し、ブラウザ上で直接動作します。</p>
+    </div>
+  </div>
+</section>
+
+<section class="closing reveal">
+  <h2 class="display" data-lang="en">Start your Poetic Signal.</h2>
+  <h2 class="display" data-lang="jp" lang-jp>あなたのPoetic Signalを、始めよう。</h2>
+  <p data-lang="en">Each tool is available individually, or unlock the complete pipeline as a bundle.</p>
+  <p data-lang="jp" class="body-jp" lang-jp>各アプリは個別に入手できます。バンドルですべてを一括で手に入れることも可能です。</p>
+  <a class="closing-cta" href="https://poeticsignal.lemonsqueezy.com/checkout/buy/47bdb8ce-4ae3-4bd2-b486-6656fa184e12" target="_blank" rel="noopener">
+    <span data-lang="en">Get the toolkit</span>
+    <span data-lang="jp" lang-jp>購入する</span>
+  </a>
+</section>
+
+<footer>
+  <div>
+    <div class="foot-mark display">Poetic Signal</div>
+    <div class="foot-contact mono">design.seez@gmail.com</div>
+  </div>
+  <div>
+    <h4 data-lang="en">Navigation</h4>
+    <h4 data-lang="jp" lang-jp>ナビゲーション</h4>
+    <ul>
+      <li><span data-lang="en"><a href="#manifesto">Manifesto</a></span><span data-lang="jp" lang-jp><a href="#manifesto">理念</a></span></li>
+      <li><span data-lang="en"><a href="#process">Process</a></span><span data-lang="jp" lang-jp><a href="#process">プロセス</a></span></li>
+      <li><span data-lang="en"><a href="#toolkit">Toolkit</a></span><span data-lang="jp" lang-jp><a href="#toolkit">ツール</a></span></li>
+      <li><span data-lang="en"><a href="#pricing">Pricing</a></span><span data-lang="jp" lang-jp><a href="#pricing">価格</a></span></li>
+    </ul>
+  </div>
+  <div>
+    <h4 data-lang="en">Legal</h4>
+    <h4 data-lang="jp" lang-jp>規約</h4>
+    <ul>
+      <li><a href="https://poetic-signal-portal.vercel.app/terms.html" target="_blank" rel="noopener" data-lang="en">Terms of Service</a><a href="https://poetic-signal-portal.vercel.app/terms.html" target="_blank" rel="noopener" data-lang="jp" lang-jp>利用規約</a></li>
+      <li><a href="https://poetic-signal-portal.vercel.app/privacy.html" target="_blank" rel="noopener" data-lang="en">Privacy Policy</a><a href="https://poetic-signal-portal.vercel.app/privacy.html" target="_blank" rel="noopener" data-lang="jp" lang-jp>プライバシーポリシー</a></li>
+      <li><a href="https://poetic-signal-portal.vercel.app/refund.html" target="_blank" rel="noopener" data-lang="en">Refund Policy</a><a href="https://poetic-signal-portal.vercel.app/refund.html" target="_blank" rel="noopener" data-lang="jp" lang-jp>返金ポリシー</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4 data-lang="en">Connect</h4>
+    <h4 data-lang="jp" lang-jp>SNS</h4>
+    <ul>
+      <li><a href="#">X / Twitter</a></li>
+      <li><a href="#">Instagram</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="foot-bottom mono">© 2026 Poetic Signal</div>
+
+<script>
+  const artLayers = document.querySelectorAll('.art-layer');
+  const thesisSection = document.querySelector('.thesis');
+  function updateArt(){
+    const triggerPoint = thesisSection.offsetTop - window.innerHeight * 0.6;
+    const target = window.scrollY > triggerPoint ? 'cell' : 'water';
+    artLayers.forEach(layer=>{
+      layer.classList.toggle('is-active', layer.dataset.art === target);
+    });
+  }
+  window.addEventListener('scroll', updateArt, { passive:true });
+  updateArt();
+
+  const langButtons = document.querySelectorAll('[data-set-lang]');
+  function setLang(lang){
+    document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
+    langButtons.forEach(b => b.classList.toggle('active', b.dataset.setLang === lang));
+    document.querySelectorAll('[data-lang]').forEach(el=>{
+      el.classList.toggle('lang-active', el.dataset.lang === lang);
+    });
+  }
+  langButtons.forEach(b=>{
+    b.addEventListener('click', ()=> setLang(b.dataset.setLang));
+  });
+  setLang('en');
+
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold:0.1 });
+  reveals.forEach(el=>io.observe(el));
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion && window.matchMedia('(min-width:900px)').matches){
+    const canvas = document.getElementById('ink-canvas');
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    });
+    let points = [];
+    window.addEventListener('mousemove', (e)=>{
+      points.push({x:e.clientX, y:e.clientY, life:1});
+      if(points.length > 24) points.shift();
+    });
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      ctx.lineCap = 'round';
+      for(let i=1;i<points.length;i++){
+        const p0 = points[i-1];
+        const p1 = points[i];
+        p1.life -= 0.035;
+        const alpha = Math.max(p1.life, 0) * 0.25;
+        const width = Math.max(p1.life * 3, 0.3);
+        ctx.strokeStyle = `rgba(26,29,27,${alpha})`;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        ctx.stroke();
+      }
+      points = points.filter(p => p.life > 0);
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+</script>
+
 </body>
 </html>
