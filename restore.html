@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Restore your license key — Poetic Signal</title>
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#F2EFE6; --ink:#1A1D1B; --moss-deep:#4A5550; --suoh:#9E3D3F; --rule:rgba(26,29,27,0.14); }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter', sans-serif; font-size:17px; line-height:1.65; min-height:100vh; display:flex; flex-direction:column; }
+  a{ color:inherit; }
+  .bar{ display:flex; justify-content:space-between; align-items:center; padding:24px 56px; }
+  .mark{ font-family:'Fraunces', serif; font-size:18px; font-weight:500; text-decoration:none; }
+  .back{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--moss-deep); }
+  main{ flex:1; width:100%; max-width:680px; margin:0 auto; padding:56px 24px 80px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 4vw, 2.75rem); line-height:1.25; margin-bottom:16px; }
+  .lead{ color:var(--moss-deep); margin-bottom:32px; }
+  label{ display:block; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--moss-deep); margin-bottom:8px; }
+  input[type=email]{ width:100%; border:1px solid var(--ink); background:rgba(255,255,255,0.5); color:var(--ink); font-family:'Inter', sans-serif; font-size:17px; padding:12px 16px; }
+  textarea{ width:100%; border:1px solid var(--ink); background:rgba(255,255,255,0.5); color:var(--ink); font-family:'JetBrains Mono', monospace; font-size:13px; line-height:1.5; padding:14px 16px; resize:none; word-break:break-all; }
+  .actions{ margin-top:16px; display:flex; align-items:center; gap:16px; }
+  button{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; border:1px solid var(--ink); background:transparent; color:var(--ink); padding:10px 22px; border-radius:20px; cursor:pointer; transition:background 0.3s, color 0.3s; }
+  button:hover{ background:var(--ink); color:var(--paper); }
+  button[disabled]{ opacity:0.6; cursor:default; }
+  :focus-visible{ outline:2px solid var(--suoh); outline-offset:3px; }
+  .status{ margin-top:20px; font-size:15px; color:var(--moss-deep); min-height:1.65em; }
+  .status.error{ color:#7A2A2C; }
+  #results{ margin-top:12px; }
+  .result{ margin-top:32px; }
+  .result h2{ font-family:'Fraunces', serif; font-weight:500; font-size:1.35rem; line-height:1.3; }
+  .result .when{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--moss-deep); margin-bottom:12px; }
+  .help{ margin-top:48px; font-size:15px; color:var(--moss-deep); }
+  .help a{ text-decoration:underline; text-underline-offset:3px; }
+  footer{ padding:28px 56px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--moss-deep); }
+  @media (max-width:700px){ .bar, footer{ padding-left:22px; padding-right:22px; } }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="mark" href="index.html">Poetic Signal</a>
+  <a class="back" href="index.html">Back to site</a>
+</header>
+
+<main id="main">
+  <h1>Restore your license key</h1>
+  <p class="lead">Enter the email address you used to pay. We will show the keys for your purchases.</p>
+
+  <form id="form" novalidate>
+    <label for="email">Email address</label>
+    <input type="email" id="email" name="email" autocomplete="email" required>
+    <div class="actions">
+      <button type="submit" id="go">Find my keys</button>
+    </div>
+  </form>
+
+  <p class="status" id="status" role="status"></p>
+  <div id="results"></div>
+
+  <p class="help">Open the app, choose Unlock and paste your key. Still stuck? Write to <a href="mailto:design.seez@gmail.com">design.seez@gmail.com</a>.</p>
+</main>
+
+<footer>&copy; 2026 Poetic Signal</footer>
+
+<script>
+(function () {
+  var NAMES = { spectraline: 'SpectraLine', luma2midi: 'Luma2MIDI', bundle: 'Poetic Signal Bundle' };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function say(text, isError) {
+    var s = $('status');
+    s.textContent = text;
+    s.className = 'status' + (isError ? ' error' : '');
+  }
+
+  function copyFrom(field, label) {
+    field.focus();
+    field.select();
+    var ok = function () { say('Copied the ' + label + ' key.'); };
+    var fail = function () { say('Select the key and copy it by hand.', true); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(field.value).then(ok, function () { document.execCommand('copy') ? ok() : fail(); });
+    } else {
+      document.execCommand('copy') ? ok() : fail();
+    }
+  }
+
+  function render(keys) {
+    var box = $('results');
+    box.textContent = '';
+    keys.forEach(function (k, i) {
+      var name = NAMES[k.product] || k.product;
+      var wrap = document.createElement('section');
+      wrap.className = 'result';
+      var h = document.createElement('h2');
+      h.textContent = name;
+      var when = document.createElement('p');
+      when.className = 'when';
+      when.textContent = k.date ? 'Purchased ' + k.date : '';
+      var label = document.createElement('label');
+      label.setAttribute('for', 'key' + i);
+      label.textContent = name + ' license key';
+      var field = document.createElement('textarea');
+      field.id = 'key' + i;
+      field.rows = 5;
+      field.readOnly = true;
+      field.spellcheck = false;
+      field.value = k.key;
+      var actions = document.createElement('div');
+      actions.className = 'actions';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Copy';
+      btn.setAttribute('aria-label', 'Copy the ' + name + ' key');
+      btn.addEventListener('click', function () { copyFrom(field, name); });
+      actions.appendChild(btn);
+      wrap.appendChild(h);
+      if (k.date) wrap.appendChild(when);
+      wrap.appendChild(label);
+      wrap.appendChild(field);
+      wrap.appendChild(actions);
+      box.appendChild(wrap);
+    });
+  }
+
+  $('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = $('email').value.trim();
+    $('results').textContent = '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      say('Please enter a valid email address.', true);
+      $('email').focus();
+      return;
+    }
+    $('go').disabled = true;
+    say('Looking for your purchases…');
+    fetch('/api/restore', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, body: j }; }); })
+      .then(function (res) {
+        if (res.status === 200 && Array.isArray(res.body.keys) && res.body.keys.length) {
+          say(res.body.keys.length === 1 ? 'We found your key.' : 'We found ' + res.body.keys.length + ' keys.');
+          render(res.body.keys);
+        } else if (res.status === 503) {
+          say('Purchases are not available yet. Please try again later.', true);
+        } else {
+          say(res.body.error || 'Something went wrong. Please try again in a minute.', true);
+        }
+      })
+      .catch(function () { say('We could not reach the server. Check your connection and try again.', true); })
+      .then(function () { $('go').disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

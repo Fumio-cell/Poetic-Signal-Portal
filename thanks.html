@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Your license key — Poetic Signal</title>
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#F2EFE6; --ink:#1A1D1B; --moss-deep:#4A5550; --suoh:#9E3D3F; --rule:rgba(26,29,27,0.14); }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter', sans-serif; font-size:17px; line-height:1.65; min-height:100vh; display:flex; flex-direction:column; }
+  a{ color:inherit; }
+  .bar{ display:flex; justify-content:space-between; align-items:center; padding:24px 56px; }
+  .mark{ font-family:'Fraunces', serif; font-size:18px; font-weight:500; text-decoration:none; }
+  .back{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--moss-deep); }
+  main{ flex:1; width:100%; max-width:680px; margin:0 auto; padding:56px 24px 80px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 4vw, 2.75rem); line-height:1.25; margin-bottom:12px; }
+  .product{ font-family:'JetBrains Mono', monospace; font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:var(--moss-deep); margin-bottom:32px; }
+  label{ display:block; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:var(--moss-deep); margin-bottom:8px; }
+  textarea{ width:100%; border:1px solid var(--ink); background:rgba(255,255,255,0.5); color:var(--ink); font-family:'JetBrains Mono', monospace; font-size:13px; line-height:1.5; padding:14px 16px; resize:none; word-break:break-all; }
+  .actions{ margin-top:16px; display:flex; align-items:center; gap:16px; }
+  button{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase; border:1px solid var(--ink); background:transparent; color:var(--ink); padding:10px 22px; border-radius:20px; cursor:pointer; transition:background 0.3s, color 0.3s; }
+  button:hover{ background:var(--ink); color:var(--paper); }
+  :focus-visible{ outline:2px solid var(--suoh); outline-offset:3px; }
+  .status{ font-size:15px; color:var(--moss-deep); }
+  .note{ margin-top:36px; padding-left:20px; border-left:2px solid var(--suoh); }
+  .note a{ text-decoration:underline; text-underline-offset:3px; }
+  .message{ margin-top:8px; }
+  .message a{ text-decoration:underline; text-underline-offset:3px; }
+  [hidden]{ display:none !important; }
+  footer{ padding:28px 56px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--moss-deep); }
+  @media (max-width:700px){ .bar, footer{ padding-left:22px; padding-right:22px; } }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="mark" href="index.html">Poetic Signal</a>
+  <a class="back" href="index.html">Back to site</a>
+</header>
+
+<main id="main">
+  <h1 id="title">Getting your key…</h1>
+  <p class="product" id="product" hidden></p>
+  <div id="loading" role="status">One moment, we are confirming your purchase.</div>
+
+  <section id="success" hidden>
+    <label for="key">License key</label>
+    <textarea id="key" rows="5" readonly spellcheck="false"></textarea>
+    <div class="actions">
+      <button type="button" id="copy">Copy</button>
+      <span class="status" id="copied" role="status"></span>
+    </div>
+    <p class="note">Save this key. Open the app, choose Unlock and paste it. Lost it? Restore it on the <a href="restore.html">restore page</a> with the email you used to pay.</p>
+  </section>
+
+  <section id="problem" hidden>
+    <p class="message" id="problem-text"></p>
+    <p class="message">Need help? Write to <a href="mailto:design.seez@gmail.com">design.seez@gmail.com</a>, or <a href="restore.html">restore your key</a> with the email you used to pay.</p>
+  </section>
+</main>
+
+<footer>&copy; 2026 Poetic Signal</footer>
+
+<script>
+(function () {
+  var NAMES = { spectraline: 'SpectraLine', luma2midi: 'Luma2MIDI', bundle: 'Poetic Signal Bundle' };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function problem(text) {
+    $('title').textContent = 'We could not show your key';
+    $('loading').hidden = true;
+    $('problem-text').textContent = text;
+    $('problem').hidden = false;
+  }
+
+  var id = new URLSearchParams(location.search).get('session_id');
+  if (!id) {
+    problem('This page needs the link from your purchase. Open it again from the checkout, or restore your key with your email.');
+  } else {
+    fetch('/api/license?session_id=' + encodeURIComponent(id), { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, body: j }; }); })
+      .then(function (res) {
+        if (res.status === 200 && res.body.key) {
+          $('title').textContent = 'Thank you';
+          $('product').textContent = NAMES[res.body.product] || res.body.product;
+          $('product').hidden = false;
+          $('key').value = res.body.key;
+          $('loading').hidden = true;
+          $('success').hidden = false;
+        } else if (res.status === 503) {
+          problem('Purchases are not available yet. Please try again later.');
+        } else if (res.status === 404) {
+          problem("We couldn't find a completed purchase for this link. If you just paid, wait a minute and reload this page.");
+        } else {
+          problem('Something went wrong while confirming your purchase. Please reload this page in a minute.');
+        }
+      })
+      .catch(function () { problem('We could not reach the server. Check your connection and reload this page.'); });
+  }
+
+  $('copy').addEventListener('click', function () {
+    var field = $('key');
+    var done = function (ok) { $('copied').textContent = ok ? 'Copied.' : 'Select the key and copy it by hand.'; };
+    field.focus();
+    field.select();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(field.value).then(function () { done(true); }, function () { done(document.execCommand('copy')); });
+    } else {
+      done(document.execCommand('copy'));
+    }
+  });
+})();
+</script>
+</body>
+</html>
